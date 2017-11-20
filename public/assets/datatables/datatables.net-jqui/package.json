@@ -1,0 +1,90 @@
+{
+  "_args": [
+    [
+      "datatables.net-jqui",
+      "/home/codigo/lamp/apache2/htdocs/settripid"
+    ]
+  ],
+  "_from": "datatables.net-jqui@latest",
+  "_id": "datatables.net-jqui@1.10.15",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/datatables.net-jqui",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/datatables.net-jqui-1.10.15.tgz_1492504047498_0.37628608173690736"
+  },
+  "_npmUser": {
+    "email": "allan@datatables.net",
+    "name": "datatables"
+  },
+  "_npmVersion": "1.3.6",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "datatables.net-jqui",
+    "raw": "datatables.net-jqui",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/datatables.net-autofill-jqui",
+    "/datatables.net-buttons-jqui",
+    "/datatables.net-responsive-jqui"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-jqui/-/datatables.net-jqui-1.10.15.tgz",
+  "_shasum": "95deaf28d8865b54921040b617a42db9c271e135",
+  "_shrinkwrap": null,
+  "_spec": "datatables.net-jqui",
+  "_where": "/home/codigo/lamp/apache2/htdocs/settripid",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "dependencies": {
+    "datatables.net": ">=1.10.9",
+    "jquery": ">=1.7"
+  },
+  "description": "DataTables for jQuery with styling for [jQuery UI](http://jqueryui.com/)",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "95deaf28d8865b54921040b617a42db9c271e135",
+    "tarball": "https://registry.npmjs.org/datatables.net-jqui/-/datatables.net-jqui-1.10.15.tgz"
+  },
+  "files": [
+    "css/dataTables.jqueryui.css",
+    "js/dataTables.jqueryui.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "DataTables",
+    "filter",
+    "jQuery",
+    "jQuery UI",
+    "sort",
+    "table"
+  ],
+  "license": "MIT",
+  "main": "js/dataTables.jqueryui.js",
+  "maintainers": [
+    {
+      "name": "datatables",
+      "email": "npm@datatables.net"
+    }
+  ],
+  "name": "datatables.net-jqui",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-jQueryUI.git"
+  },
+  "style": "css/dataTables.jqueryui.css",
+  "version": "1.10.15"
+}
