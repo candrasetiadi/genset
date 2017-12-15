@@ -37,12 +37,12 @@
 				                    <tr>
 				                        <td width="40%"><label>Nama Lapangan</label></td>
 				                        <td width="5%"><label>:</label></td>
-				                        <td width="55%"><label>{{ $data->field_name }}</label></td>
+				                        <td width="55%"><label>{{ $data->field_no }} {{ $data->field_name }}</label></td>
 				                    </tr>
 				                    <tr>
 				                        <td width="40%"><label>Set Point</label></td>
 				                        <td width="5%"><label>:</label></td>
-				                        <td width="55%"><label>{{ $data->set_point }}</label></td>
+				                        <td width="55%"><label>{{ $data->set_point }}&deg;C</label></td>
 				                    </tr>
 				                    <tr>
 				                        <td width="40%"><label>Tanggal Masuk</label></td>
@@ -53,6 +53,11 @@
 				                        <td width="40%"><label>Jam Masuk</label></td>
 				                        <td width="5%"><label>:</label></td>
 				                        <td width="55%"><label>{{ $data->time_in }}</label></td>
+				                    </tr>
+				                    <tr>
+				                        <td width="40%"><label>Dibuat Oleh</label></td>
+				                        <td width="5%"><label>:</label></td>
+				                        <td width="55%"><label>{{ $data->user_name }}</label></td>
 				                    </tr>
 				                </table>
                             </div>

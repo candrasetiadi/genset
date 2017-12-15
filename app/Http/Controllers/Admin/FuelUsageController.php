@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\FuelUsage;
+use PDF;
 
 class FuelUsageController extends Controller
 {
@@ -134,5 +135,18 @@ class FuelUsageController extends Controller
         // redirect
         return redirect()->route('fuelUsage.index')
                         ->with('success','Fuel Usage deleted successfully');
+    }
+
+    public function generatePdf($id) {
+        $data = DB::table('fuel_usages as a')
+                        ->select('a.id', 'a.id_field', 'a.date', 'a.id_generator', 'a.usage', 'a.price','a.field_operator', 'a.unit_operator', 'b.name as generator_name', 'c.name as field_name')
+                        ->leftJoin('generators as b', 'a.id_generator', '=', 'b.id')
+                        ->leftJoin('fields as c', 'a.id_field', '=', 'c.id')
+                        ->where('a.id', $id)
+                        ->first();
+        
+        // dd($data);
+        $pdf = PDF::loadView('admin.fuelUsages.export', compact('data'));
+        return $pdf->stream('document.pdf');
     }
 }

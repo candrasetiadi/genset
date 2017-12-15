@@ -50,6 +50,7 @@ class CustomerController extends Controller
             'customer_no' => 'required',
             'name' => 'required',
             'email' => 'required',
+            'address' => 'required',
             'phone_1' => 'required',
             'pic' => 'required'
         ]);
@@ -81,7 +82,7 @@ class CustomerController extends Controller
     public function edit(Request $request, $id)
     {
         $data = DB::table('customers')
-                        ->select('id', 'customer_no', 'email', 'name', 'phone_1', 'phone_2', 'pic')
+                        ->select('id', 'customer_no', 'email', 'name', 'address', 'phone_1', 'phone_2', 'pic')
                         ->where('id', $id)
                         ->get();
         return $data;
@@ -102,6 +103,7 @@ class CustomerController extends Controller
             'customer_no' => 'required',
             'name' => 'required',
             'email' => 'required',
+            'address' => 'required',
             'phone_1' => 'required',
             'pic' => 'required'
         ]);

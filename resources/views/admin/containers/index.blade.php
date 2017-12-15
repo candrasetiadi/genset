@@ -117,8 +117,8 @@
                             <div class="controls">
                                 <select id="size" name="size" class="form-control" placeholder="Please Select" required>
                                     <option value="0">&nbsp;</option>
-                                    <option value="12">12ft</option>
-                                    <option value="24">24ft</option>
+                                    <option value="20">20</option>
+                                    <option value="40">40</option>
                                    
                                 </select>
                             </div>

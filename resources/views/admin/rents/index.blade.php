@@ -62,7 +62,7 @@
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->date_out }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">@if ($rent->status == 1) {{ 'Aktif' }} @else {{ 'Selesai' }} @endif</td>
                                                     <td>
-                                                        
+                                                        <!-- <a href="{{ route('rent.exportpdf', $rent->id) }}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a> -->
                                                         <a href="" data-action="edit" data-id="{{ $rent->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
                                                         <a href="{{ route('rent.delete', $rent->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
 
@@ -107,7 +107,7 @@
                             <label class="form-control-label" for="id_ship">Kapal</label>
                             <div class="controls">
                                 <select id="id_ship" name="id_ship" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                    <option value="">&nbsp;</option>
                                     @foreach($ships as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->name }}</option>
                                     @endforeach
@@ -124,11 +124,27 @@
                             <label class="form-control-label" for="id_container">Container</label>
                             <div class="controls">
                                 <select id="id_container" name="id_container" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>                                   
+                                    <option value="">&nbsp;</option>                                   
                                 </select>
                                     
                                 <input type="hidden" name="id" id="id" value="">
                                 <input type="hidden" name="_method" id="method" value="POST">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="delivery_type">Tipe Pengiriman</label>
+                            <div class="controls">
+                                <select id="delivery_type" name="delivery_type" class="form-control" placeholder="Please Select" required>
+                                    <option value="">&nbsp;</option>
+                                    <option value="export">Export</option>
+                                    <option value="import">Import</option>
+                                   
+                                </select>
+                                    
+                                <input type="hidden" name="id" id="id" value="">
+                                <input type="hidden" name="_method" id="method" value="POST">
+                                <input type="hidden" name="created_by" value="{{ Auth::user()->id }}">
                             </div>
                         </div>
 

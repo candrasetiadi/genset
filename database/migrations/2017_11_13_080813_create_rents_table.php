@@ -19,6 +19,7 @@ class CreateRentsTable extends Migration
             $table->string('id_ship');
             $table->string('id_container');
             $table->string('set_point');
+            $table->enum('delivery_type', ['export', 'import']);
             $table->date('date_in');
             $table->string('time_in');
             $table->date('date_out')->nullable();

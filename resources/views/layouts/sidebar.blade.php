@@ -58,6 +58,34 @@
                     </li>
                     
                 </ul>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/spka') }}" target="_top"><i class="fa fa-file-o"></i> SPKA</a>
+                    </li>
+                    
+                </ul>
+            </li>
+            <li class="divider"></li>
+            <li class="nav-title">
+                Laporan
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-circle"></i> Harian</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/rent/refeerContainer/show') }}" target="_top"><i class="fa fa-file"></i> RM Refeer Container</a>
+                    </li>
+                    
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-circle"></i> Mingguan</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/rent/refeerContainer/show') }}" target="_top"><i class="fa fa-file"></i> Recooling &amp; Monitoring</a>
+                    </li>
+                    
+                </ul>
             </li>
         </ul>
     </nav>

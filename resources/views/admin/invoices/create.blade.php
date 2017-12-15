@@ -63,14 +63,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="form-control-label" for="remark">Keterangan</label>
                                     <div class="controls">
                                         <div class="input-group">
                                             <textarea id="remark" class="form-control" name="remark" required></textarea>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-actions">
                                     <button type="submit" class="btn btn-primary">Save changes</button>
                                     <a href="{{ route('invoice.index') }}"><button type="button" class="btn btn-default">Cancel</button></a>
