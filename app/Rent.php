@@ -11,6 +11,7 @@ class Rent extends Model
         'id_ship', 
         'id_container',
         'set_point',
+        'delivery_type',
         'date_in',
         'time_in',
         'date_out',

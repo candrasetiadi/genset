@@ -38,9 +38,10 @@
                                     <table class="stripe hover mdl-data-table" id="settable" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th width="20%">Nomor</th>
-                                                <th width="25%">Nama</th>
-                                                <th width="25%">Email</th>
+                                                <th width="10%">Nomor</th>
+                                                <th width="20%">Nama</th>
+                                                <th width="15%">Email</th>
+                                                <th width="25%">Address</th>
                                                 <th width="10%">Telepon</th>
                                                 <th width="15%">PIC</th>
                                                 <th width="5%">Action</th>
@@ -55,6 +56,7 @@
                                                     <td>{{ $customer->customer_no }}</td>
                                                     <td>{{ $customer->name }}</td>
                                                     <td>{{ $customer->email }}</td>
+                                                    <td>{{ $customer->address }}</td>
                                                     <td>{{ $customer->phone_1 }}</td>
                                                     <td>{{ $customer->pic }}</td>
                                                     <td>
@@ -113,6 +115,14 @@
                             <div class="controls">
                                 <div class="input-group">
                                     <input id="name" class="form-control" type="name" name="name" required>
+                                </div>
+                            </div>                         
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="address">Address</label>
+                            <div class="controls">
+                                <div class="input-group">
+                                    <textarea id="address" class="form-control" name="address" required></textarea>
                                 </div>
                             </div>                         
                         </div>

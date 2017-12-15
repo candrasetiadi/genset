@@ -59,7 +59,9 @@ Route::prefix('admin')->group(function () {
 	Route::get('rent/{id}/delete', ['as' => 'rent.delete', 'uses' => 'Admin\RentController@destroy']);
 	Route::post('rent/detail', ['as' => 'rent.storeDetail', 'uses' => 'Admin\RentController@storeDetail']);
 
-	// //rent
+	Route::get('rent/refeerContainer/show', ['as' => 'rent.refeerContainer', 'uses' => 'Admin\RentController@refeerContainer']);
+
+	// //fuel
 	Route::resource('fuelUsage', 'Admin\FuelUsageController');
 	Route::get('fuelUsage/{id}/delete', ['as' => 'fuelUsage.delete', 'uses' => 'Admin\FuelUsageController@destroy']);
 
@@ -67,8 +69,24 @@ Route::prefix('admin')->group(function () {
 	Route::resource('invoice', 'Admin\InvoiceController');
 	Route::get('invoice/{id}/delete', ['as' => 'invoice.delete', 'uses' => 'Admin\InvoiceController@destroy']);
 	Route::post('invoice/detail', ['as' => 'invoice.storeDetail', 'uses' => 'Admin\InvoiceController@storeDetail']);
+	Route::get('invoice/textNumber', ['as' => 'invoice.textNumber', 'uses' => 'Admin\InvoiceController@textNumber']);
+
+	// //spka
+	Route::resource('spka', 'Admin\SpkaController');
+	Route::get('spka/{id}/delete', ['as' => 'spka.delete', 'uses' => 'Admin\SpkaController@destroy']);
 
 	Route::get('container/{id}/get','Admin\ContainerController@getByShip');
+	
+
+	//export PDF
+	Route::get('fuelUsage/{id}/exportpdf', ['as' => 'fuelUsage.exportpdf', 'uses' => 'Admin\FuelUsageController@generatePdf']);
+	Route::get('invoice/{id}/exportpdf', ['as' => 'invoice.exportpdf', 'uses' => 'Admin\InvoiceController@generatePdf']);
+
+	Route::get('spka/{id}/exportpdf', ['as' => 'spka.exportpdf', 'uses' => 'Admin\SpkaController@generatePdf']);
+
+	Route::post('rent/exportpdf', ['as' => 'rent.exportpdf', 'uses' => 'Admin\RentController@generatePdf']);
+
+
 	
 });
 

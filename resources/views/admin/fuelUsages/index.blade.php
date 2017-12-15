@@ -56,7 +56,7 @@
                                                     <td>{{ $fuelUsage->generator_name }}</td>
                                                     <td>{{ $fuelUsage->usage }} Liter</td>
                                                     <td>
-                                                        
+                                                        <a href="{{ route('fuelUsage.exportpdf', $fuelUsage->id) }}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a>
                                                         <a href="" data-action="edit" data-id="{{ $fuelUsage->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
                                                         <a href="{{ route('fuelUsage.delete', $fuelUsage->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
 
