@@ -56,7 +56,7 @@
 
 
     <!-- Plugins and scripts required by all views -->
-    <!-- <script src="/bower_components/chart.js/dist/Chart.min.js"></script> -->
+    <script src="/bower_components/chart.js/dist/Chart.min.js"></script>
     <!-- <script src="/assets/js/views/charts.js"></script> -->
     <!-- <script src="/assets/js/views/main.js"></script> -->
 
@@ -82,4 +82,8 @@
     <script src="/assets/js/views/select2.js"></script>
     
     <script src="/assets/js/views/bootstrap-datetimepicker.min.js"></script>
+
+
+    
+    <!-- <script src="/assets/js/views/charts.js"></script> -->
 
