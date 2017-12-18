@@ -10,10 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-
-	return view('welcome');
-});
+	Route::get('/', 'Client\LandingController@index')->name('landing');
+	// return view('welcome');
 
 Route::get('/admin', function () {
 
