@@ -102,9 +102,44 @@ class LandingController extends Controller
         $landings = Landing::findOrFail($id);
 
         $this->validate($request, [
-            // 'title' => 'required',
-            // 'description' => 'required'
+
+            'image_1' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_3' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+
         ]);
+
+        $destinationPath = public_path('/images');
+
+        if ($request->file('image_1')) {
+            $banner_1 = $request->file('image_1');
+            // $name_1 = time().'.'.$banner_1->getClientOriginalExtension();
+            $name_1 = 'banner_1.'. $banner_1->getClientOriginalExtension();
+            $banner_1->move($destinationPath, $name_1);
+            $request->merge([
+                'banner_1' => 'banner_1.'. $banner_1->getClientOriginalExtension()
+            ]);
+        }
+
+        if ($request->file('image_2')) {
+            $banner_2 = $request->file('image_2');
+            // $name_2 = time().'.'.$banner_2->getClientOriginalExtension();
+            $name_2 = 'banner_2.' . $banner_2->getClientOriginalExtension();
+            $banner_2->move($destinationPath, $name_2);
+            $request->merge([
+                'banner_2' => 'banner_2.' . $banner_2->getClientOriginalExtension()
+            ]);
+        }
+
+        if ($request->file('image_3')) {
+            $banner_3 = $request->file('image_3');
+            // $name_3 = time().'.'.$banner_3->getClientOriginalExtension();
+            $name_3 = 'banner_3.' . $banner_3->getClientOriginalExtension();
+            $banner_3->move($destinationPath, $name_3);
+            $request->merge([
+                'banner_3' => 'banner_3.' . $banner_3->getClientOriginalExtension()
+            ]);
+        }
 
         $input = $request->all();
 

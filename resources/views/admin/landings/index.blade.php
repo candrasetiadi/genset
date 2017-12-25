@@ -76,7 +76,7 @@
         <div class="modal fade" id="primaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-primary" role="document">
                 <div class="modal-content">
-                    <form class="form" method="POST" action="{{ url('admin/configuration') }}">
+                    <form class="form" enctype="multipart/form-data" method="POST" action="{{ url('admin/configuration') }}">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -119,6 +119,30 @@
                             <div class="controls">
                                 <div class="input-group">
                                     <input id="website" class="form-control"  type="text" name="website">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="image_1">Banner 1</label>
+                            <div class="controls">
+                                <div class="input-group">
+                                    <input id="image_1" class="form-control"  type="file" name="image_1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="image_2">Banner 2</label>
+                            <div class="controls">
+                                <div class="input-group">
+                                    <input id="image_2" class="form-control"  type="file" name="image_2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="image_3">Banner 3</label>
+                            <div class="controls">
+                                <div class="input-group">
+                                    <input id="image_3" class="form-control"  type="file" name="image_3">
                                 </div>
                             </div>
                         </div>                        

@@ -38,6 +38,26 @@
         <!-- Main Stylesheet -->
         <link rel="stylesheet" href="/assets/landing/css/main.css">
 
+        <style type="text/css">
+            .bg-img-1 {
+                background-image: url(images/{{ $data->banner_1 }});
+            }
+            .bg-img-2 {
+                background-image: url(images/{{ $data->banner_2 }});
+            }
+            .bg-img-3 {
+                background-image: url(images/{{ $data->banner_3 }});
+            }
+
+            .logos {
+
+                width: 100px;
+                height: 90px;
+                margin-top: -35px;
+
+            }
+        </style>
+
         <!-- Modernizer Script for old Browsers -->
         <script src="/assets/landing/js/modernizr-2.6.2.min.js"></script>
 
@@ -70,7 +90,7 @@
                     
                     <!-- logo -->
                     <h1 class="navbar-brand">
-                        <a href="#body">Blue</a>
+                        <a href="#body"><img src="images/logoTLP.png" class="logos"></a>
                     </h1>
                     <!-- /logo -->
                 </div>
@@ -111,9 +131,9 @@
 
                         <div class="slide-caption">
                             <div class="caption-content">
-                                <h2 class="animated fadeInDown">BLUE Onepage HTML5 Template</h2>
-                                <span class="animated fadeInDown">Clean and Professional one page Template</span>
-                                <a href="#" class="btn btn-blue btn-effect">Join US</a>
+                                <h2 class="animated fadeInDown"> {{ $data->text_1 }} </h2>
+                                <!-- <span class="animated fadeInDown">Clean and Professional one page Template</span> -->
+                                <!-- <a href="#" class="btn btn-blue btn-effect">Join US</a> -->
                             </div>
                         </div>
                         
@@ -124,9 +144,9 @@
                         <div class="bg-img bg-img-2"></div>
                         <div class="slide-caption">
                             <div class="caption-content">
-                                <h2>BLUE Onepage HTML5 Template</h2>
-                                <span>Clean and Professional one page Template</span>
-                                <a href="#" class="btn btn-blue btn-effect">Join US</a>
+                                <h2>{{ $data->text_2 }}</h2>
+                                <!-- <span>Clean and Professional one page Template</span>
+                                <a href="#" class="btn btn-blue btn-effect">Join US</a> -->
                             </div>
                         </div>
                         
@@ -137,9 +157,9 @@
                         <div class="bg-img bg-img-3"></div>
                         <div class="slide-caption">
                             <div class="caption-content">
-                                <h2>BLUE Onepage HTML5 Template</h2>
-                                <span>Clean and Professional one page Template</span>
-                                <a href="#" class="btn btn-blue btn-effect">Join US</a>
+                                <h2>{{ $data->text_3 }}</h2>
+                                <!-- <span>Clean and Professional one page Template</span>
+                                <a href="#" class="btn btn-blue btn-effect">Join US</a> -->
                             </div>
                         </div>
 
@@ -330,7 +350,7 @@
                             <h2>About Us</h2>
                         </div>
 
-                        <p>Blablabla</p>
+                        <p>{{ $data->about_us }}</p>
                         
                         <!-- <div id="testimonial" class=" wow animated fadeInUp">
                             <div class="testimonial-item text-center">
@@ -486,9 +506,10 @@
                     <div class="col-md-5 wow animated fadeInRight">
                         <address class="contact-details">
                             <h3>Contact Us</h3>                     
-                            <p><i class="fa fa-pencil"></i>Phoenix Inc.<span>PO Box 345678</span> <span>Little Lonsdale St, Melbourne </span><span>Australia</span></p><br>
-                            <p><i class="fa fa-phone"></i>Phone: (415) 124-5678 </p>
-                            <p><i class="fa fa-envelope"></i>website@yourname.com</p>
+                            <p><i class="fa fa-pencil"></i>{{ $data->address }}</p><br>
+                            <!-- <p><i class="fa fa-pencil"></i>Phoenix Inc.<span>PO Box 345678</span> <span>Little Lonsdale St, Melbourne </span><span>Australia</span></p><br> -->
+                            <p><i class="fa fa-phone"></i>Phone: {{ $data->phone }} </p>
+                            <p><i class="fa fa-envelope"></i>{{ $data->website }}</p>
                         </address>
                     </div>
         
