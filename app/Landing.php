@@ -10,6 +10,12 @@ class Landing extends Model
         'about_us',
         'address',
         'phone',
-        'website'
+        'website',
+        'banner_1',
+        'banner_2',
+        'banner_3',
+        'text_1',
+        'text_2',
+        'text_3'
     ];
 }
