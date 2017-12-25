@@ -59,12 +59,12 @@
                                                     <td>{{ $container->size }}</td>
                                                     <td>{{ $container->field_name }}</td>
                                                     <td>{{ $container->ship_name }}</td>
-                                                    <td>{{ $container->recooling_price }}</td>
-                                                    <td>{{ $container->monitoring_price }}</td>
+                                                    <td align="right">Rp. {{ number_format($container->recooling_price,0,',','.') }}</td>
+                                                    <td align="right">Rp. {{ number_format($container->monitoring_price,0,',','.') }}</td>
                                                     <td>
                                                         
                                                         <a href="" data-action="edit" data-id="{{ $container->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-                                                        <a href="{{ route('container.delete', $container->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                        <a href="" data="{{ $container->id }}" id="deleteRow" data-base="container" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
 
                                                     </td>
                                                 </tr>

@@ -37,7 +37,7 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label class="form-control-label" for="start">Start</label>
+                                                    <label class="form-control-label" for="start">Dari</label>
                                                     <div class="controls">
                                                         <div class="input-group">
                                                             <input id="start" class="form-control datetimepickers" type="start" name="start" required>
@@ -47,11 +47,25 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label class="form-control-label" for="end">End</label>
+                                                    <label class="form-control-label" for="end">Sampai</label>
                                                     <div class="controls">
                                                         <div class="input-group">
                                                             <input id="end" class="form-control datetimepickers" type="end" name="end" required>
                                                         </div>
+                                                    </div>                         
+                                                </div>
+                                            </div>                              
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="id_field">Lapangan</label>
+                                                    <div class="controls">
+                                                        <select id="id_field" name="id_field" class="form-control" placeholder="Please Select" required>
+                                                            <option value="">&nbsp;</option>
+                                                            @foreach($fields as $key => $val)
+                                                                <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                                            @endforeach
+                                                           
+                                                        </select>
                                                     </div>                         
                                                 </div>
                                             </div>
@@ -72,7 +86,7 @@
 
                                     
 
-                                    <table class="stripe hover mdl-data-table" id="settable" cellspacing="0" width="100%">
+                                    <!-- <table class="stripe hover mdl-data-table" id="settable" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th width="5%">Nomor</th>
@@ -109,7 +123,7 @@
                                                 </tr>
                                             @endforeach
                                         </tbody>
-                                    </table>
+                                    </table> -->
                                 </div>
                             </div>
                         </div>

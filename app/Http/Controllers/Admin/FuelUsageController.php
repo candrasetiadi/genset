@@ -20,19 +20,23 @@ class FuelUsageController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $fuelUsages = DB::table('fuel_usages as a')
-                        ->select('a.id', 'a.id_field', 'a.date', 'a.id_generator', 'a.usage', 'a.price','a.field_operator', 'a.unit_operator', 'b.name as generator_name', 'c.name as field_name')
-                        ->leftJoin('generators as b', 'a.id_generator', '=', 'b.id')
-                        ->leftJoin('fields as c', 'a.id_field', '=', 'c.id')
-                        ->get();
+        if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
+            $fuelUsages = DB::table('fuel_usages as a')
+                            ->select('a.id', 'a.id_field', 'a.date', 'a.id_generator', 'a.usage', 'a.price','a.field_operator', 'a.unit_operator', 'b.name as generator_name', 'c.name as field_name')
+                            ->leftJoin('generators as b', 'a.id_generator', '=', 'b.id')
+                            ->leftJoin('fields as c', 'a.id_field', '=', 'c.id')
+                            ->get();
 
-        $fields = DB::table('fields')->get();
-        $generators = DB::table('generators')->get();
-        $title = 'Bon Pemakaian Solar';
+            $fields = DB::table('fields')->get();
+            $generators = DB::table('generators')->get();
+            $title = 'Bon Pemakaian Solar';
 
-        return view('admin.fuelUsages.index', compact('fuelUsages', 'fields', 'generators', 'title'));
+            return view('admin.fuelUsages.index', compact('fuelUsages', 'fields', 'generators', 'title'));
+        } else {
+            redirect('/admin/home');
+        }
     }
 
     /**

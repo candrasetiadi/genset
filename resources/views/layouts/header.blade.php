@@ -49,9 +49,9 @@
                 </form> -->
             </div>
         </li>
-        <!-- <li class="nav-item d-md-down-none">
-            <a class="nav-link navbar-toggler aside-menu-toggler" href="#">☰</a>
-        </li> -->
+        <li class="nav-item d-md-down-none">
+            <!-- <a class="nav-link navbar-toggler aside-menu-toggler" href="#">☰</a> -->
+        </li>
 
     </ul>
 </header>

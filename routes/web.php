@@ -29,6 +29,8 @@ Route::prefix('admin')->group(function () {
 	Route::get('users', 'Admin\UserController@index')->name('users');
 	Route::get('users/profile/{id}', ['as' => 'users.profile', 'uses' => 'Admin\UserController@profile']);
 	Route::patch('users/update/{id}', ['as' => 'users.update', 'uses' => 'Admin\UserController@update']);
+	Route::get('users/role/{id}/edit', ['as' => 'users.editRole', 'uses' => 'Admin\UserController@editRole']);
+	Route::patch('users/role/{id}/update', ['as' => 'users.updateRole', 'uses' => 'Admin\UserController@updateRole']);
 
 	Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
@@ -62,6 +64,13 @@ Route::prefix('admin')->group(function () {
 	// //fuel
 	Route::resource('fuelUsage', 'Admin\FuelUsageController');
 	Route::get('fuelUsage/{id}/delete', ['as' => 'fuelUsage.delete', 'uses' => 'Admin\FuelUsageController@destroy']);
+
+	// //landing
+	Route::resource('configuration', 'Admin\LandingController');
+	Route::get('landing/{id}/delete', ['as' => 'landing.delete', 'uses' => 'Admin\LandingController@destroy']);
+
+	// //landing services
+	Route::resource('service', 'Admin\ServiceController');
 
 	// //invoice
 	Route::resource('invoice', 'Admin\InvoiceController');

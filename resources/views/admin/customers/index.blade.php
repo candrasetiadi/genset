@@ -62,7 +62,8 @@
                                                     <td>
                                                         
                                                         <a href="" data-action="edit" data-id="{{ $customer->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-                                                        <a href="{{ route('customer.delete', $customer->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                        <!-- {{ route('customer.delete', $customer->id) }} -->
+                                                        <a href="" title="Delete" data="{{ $customer->id }}" id="deleteRow" data-base="customer"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
 
                                                     </td>
                                                 </tr>
@@ -92,7 +93,7 @@
                         <!-- {{method_field("PATCH")}} -->
                         {{ csrf_field() }}
                         
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="form-control-label" for="customer_no">Customer No</label>
                             <div class="controls">
                                 <div class="input-group">
@@ -101,7 +102,7 @@
                                     <input type="hidden" name="_method" id="method" value="POST">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label class="form-control-label" for="email">Email</label>
                             <div class="controls">
@@ -220,5 +221,7 @@
                 $("#id").val("")
             }
         })
-    });
+
+        
+    })
 </script>

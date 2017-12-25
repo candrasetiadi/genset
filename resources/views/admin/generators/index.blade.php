@@ -60,7 +60,7 @@
                                                     <td>
                                                         
                                                         <a href="" data-action="edit" data-id="{{ $generator->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-                                                        <a href="{{ route('generator.delete', $generator->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                        <a href="" data="{{ $generator->id }}" id="deleteRow" data-base="generator" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
 
                                                     </td>
                                                 </tr>

@@ -55,6 +55,16 @@ $(document).ready(function($){
         placeholder: "Select an Option",
         tags: true
     })
+
+    $(document).on('click', '#deleteRow', function(e){
+        e.preventDefault()
+
+        var _id = $(this).attr('data')
+            base = $(this).attr('data-base')
+        
+        deleteConfirmation(_id, base)
+        
+    })
   
   // Add class .active to current link
   $.navigation.find('a').each(function(){
@@ -175,4 +185,12 @@ function init(url) {
 
 function qualifyURL(url) {
     return "http://localhost:8000/admin/" + url;
+}
+
+function deleteConfirmation(id, base) {
+    var dialog = confirm("Are you sure to delete this row?")
+
+    if (dialog == true) {
+        window.location.href = base + "/" + id + "/delete"
+    }
 }

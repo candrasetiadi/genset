@@ -80,7 +80,7 @@
                     <ul id="nav" class="nav navbar-nav">
                         <li><a href="#body">Home</a></li>
                         <li><a href="#service">Service</a></li>
-                        <li><a href="#aboutus">About Us</a></li>
+                        <li><a href="#testimonials">About Us</a></li>
                         <!-- <li><a href="#testimonials">Testimonial</a></li>
                         <li><a href="#price">price</a></li> -->
                         <li><a href="#contact">Contact</a></li>
@@ -186,9 +186,9 @@
                     
                     <div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn">
                         <div class="service-item">
-                            <div class="service-icon">
+                            <!-- <div class="service-icon">
                                 <i class="fa fa-home fa-3x"></i>
-                            </div>
+                            </div> -->
                             <h3>Support</h3>
                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
                         </div>
@@ -196,9 +196,9 @@
                 
                     <div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn" data-wow-delay="0.3s">
                         <div class="service-item">
-                            <div class="service-icon">
+                           <!--  <div class="service-icon">
                                 <i class="fa fa-tasks fa-3x"></i>
-                            </div>
+                            </div> -->
                             <h3>Well Documented</h3>
                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
                         </div>
@@ -206,9 +206,9 @@
                 
                     <div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn" data-wow-delay="0.6s">
                         <div class="service-item">
-                            <div class="service-icon">
+                            <!-- <div class="service-icon">
                                 <i class="fa fa-clock-o fa-3x"></i>
-                            </div>
+                            </div> -->
                             <h3>Design UI/UX</h3>
                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
                         </div>
@@ -216,9 +216,9 @@
                 
                     <div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn" data-wow-delay="0.9s">
                         <div class="service-item">
-                            <div class="service-icon">
+                            <!-- <div class="service-icon">
                                 <i class="fa fa-heart fa-3x"></i>
-                            </div>
+                            </div> -->
                             
                             <h3>Web Security</h3>
                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>                          
@@ -329,8 +329,10 @@
                         <div class="sec-title text-center white wow animated fadeInDown">
                             <h2>About Us</h2>
                         </div>
+
+                        <p>Blablabla</p>
                         
-                        <div id="testimonial" class=" wow animated fadeInUp">
+                        <!-- <div id="testimonial" class=" wow animated fadeInUp">
                             <div class="testimonial-item text-center">
                                 <img src="/assets/landing/img/member-1.jpg" alt="Our landings">
                                 <div class="clearfix">
@@ -352,7 +354,7 @@
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     
                     </div>
                 </div>

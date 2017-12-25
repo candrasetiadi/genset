@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Role;
 
 class UserController extends Controller
 {
@@ -24,11 +25,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = DB::table('users')->get();
+        if( $request->user()->hasAnyRole(['admin', 'admin kantor'])) {
+            $users = DB::table('users')
+                            ->select('users.*', 'roles.name as role_name')
+                            ->leftJoin('role_user', 'users.id', '=', 'role_user.user_id')
+                            ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
+                            ->get();
 
-        return view('users.index', compact('users'));
+            $roles = DB::table('roles')->get();
+
+            return view('users.index', compact('users', 'roles'));
+        } else {
+            redirect('/admin/home');
+        }
     }
 
     public function profile($id)
@@ -60,5 +71,40 @@ class UserController extends Controller
         $request->session()->flash('flash_message', 'users successfully updated!');
         
         return redirect()->route('users.profile', $id);
+    }
+
+    public function editRole(Request $request, $id)
+    {
+        $data = DB::table('roles')
+                        ->where('id', $id)
+                        ->get();
+        return $data;
+    }
+
+    public function updateRole(Request $request, $id)
+    {
+        // dd($request);
+        $check = DB::table('role_user')
+                        ->where('id', $request->user_id)
+                        ->first();
+
+        $this->validate($request, [
+            // 'title' => 'required',
+            // 'description' => 'required'
+        ]);
+
+        if( $check == null ) {
+            DB::table('role_user')->insert(
+                ['role_id' => $request->role_id, 'user_id' => $request->user_id]
+            );
+        } else {
+            DB::table('role_user')
+                    ->where('user_id', $request->user_id)
+                    ->update(['role_id' => $request->role_id, 'user_id' => $request->user_id]);
+        }
+
+        $request->session()->flash('flash_message', 'roles successfully updated!');
+        
+        return redirect()->route('users');
     }
 }

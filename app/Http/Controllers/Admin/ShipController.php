@@ -19,12 +19,16 @@ class ShipController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $ships = DB::table('ships')->get();
-        $title = 'Kapal';
+        if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
+            $ships = DB::table('ships')->get();
+            $title = 'Kapal';
 
-        return view('admin.ships.index', compact('ships', 'title'));
+            return view('admin.ships.index', compact('ships', 'title'));
+        } else {
+            redirect('/admin/home');
+        }
     }
 
     /**

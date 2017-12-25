@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Generator;
+use App\LandingService;
 
-class GeneratorController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +18,16 @@ class GeneratorController extends Controller
     {
         $this->middleware('auth');
     }
-
+    
     public function index(Request $request)
     {
         if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
-            $generators = DB::table('generators')->get();
-            $title = 'Generator';
+            $services = DB::table('landing_services')
+                            ->get();
 
-            return view('admin.generators.index', compact('generators', 'title'));
+            $title = 'Landing Page Configuration';
+
+            return view('admin.landingServices.index', compact('services', 'title'));
         } else {
             redirect('/admin/home');
         }
@@ -50,18 +52,14 @@ class GeneratorController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'generator_no' => 'required',
-            'name' => 'required',
-            'brand' => 'required',
-            'type' => 'required',
-            'diesel_fuel_capacity' => 'required'
+
         ]);
 
-        Generator::create($request->all());
+        LandingService::create($request->all());
 
-        $request->session()->flash('flash_message', 'Generator successfully added!');
+        $request->session()->flash('flash_message', 'Service successfully added!');
         
-        return redirect()->route('generator.index');
+        return redirect()->route('service.index');
     }
 
     /**
@@ -81,10 +79,9 @@ class GeneratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
-        $data = DB::table('generators')
-                        ->select('id', 'generator_no', 'name', 'brand', 'type', 'diesel_fuel_capacity')
+        $data = DB::table('landing_services')
                         ->where('id', $id)
                         ->get();
         return $data;
@@ -99,24 +96,21 @@ class GeneratorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $generator = Generator::findOrFail($id);
+        $service = LandingService::findOrFail($id);
 
         $this->validate($request, [
-            'generator_no' => 'required',
-            'name' => 'required',
-            'brand' => 'required',
-            'type' => 'required',
-            'diesel_fuel_capacity' => 'required'
+            // 'title' => 'required',
+            // 'description' => 'required'
         ]);
 
         $input = $request->all();
 
-        $generator->fill($input)->save();
+        $service->fill($input)->save();
 
-        $request->session()->flash('flash_message', 'Generator successfully updated!');
+        $request->session()->flash('flash_message', 'Configuration successfully updated!');
         
-        return redirect()->route('generator.index')
-                        ->with('success','Generator updated successfully');
+        return redirect()->route('service.index')
+                        ->with('success','service updated successfully');
     }
 
     /**
@@ -127,11 +121,11 @@ class GeneratorController extends Controller
      */
     public function destroy($id)
     {
-        $generators = Generator::find($id);
-        $generators->delete();
+        $service = LandingService::find($id);
+        $service->delete();
 
         // redirect
-        return redirect()->route('generator.index')
-                        ->with('success','generator deleted successfully');
+        return redirect()->route('service.index')
+                        ->with('success','service deleted successfully');
     }
 }
