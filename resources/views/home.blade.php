@@ -127,17 +127,17 @@
             datasets : [
                 {
                     label : '20',
-                    backgroundColor : 'rgba(220,220,220,0.5)',
-                    borderColor : 'rgba(220,220,220,0.8)',
-                    highlightFill: 'rgba(220,220,220,0.75)',
+                    backgroundColor : 'rgba(220,220,220,1)',
+                    borderColor : 'rgba(220,220,220,1)',
+                    highlightFill: 'rgba(220,220,220,1)',
                     highlightStroke: 'rgba(220,220,220,1)',
                     data : [plugin1]
                 },
                 {
                     label : '40',
-                    backgroundColor : 'rgba(151,187,205,0.5)',
-                    borderColor : 'rgba(151,187,205,0.8)',
-                    highlightFill : 'rgba(151,187,205,0.75)',
+                    backgroundColor : 'rgba(151,187,205,1)',
+                    borderColor : 'rgba(151,187,205,1)',
+                    highlightFill : 'rgba(151,187,205,1)',
                     highlightStroke : 'rgba(151,187,205,1)',
                     data : [plugin2]
                 }
@@ -170,17 +170,17 @@
             datasets : [
                 {
                     label : '20',
-                    backgroundColor : 'rgba(220,220,220,0.5)',
-                    borderColor : 'rgba(220,220,220,0.8)',
-                    highlightFill: 'rgba(220,220,220,0.75)',
+                    backgroundColor : 'rgba(220,220,220,1)',
+                    borderColor : 'rgba(220,220,220,1)',
+                    highlightFill: 'rgba(220,220,220,1)',
                     highlightStroke: 'rgba(220,220,220,1)',
                     data : [plugout1]
                 },
                 {
                     label : '40',
-                    backgroundColor : 'rgba(151,187,205,0.5)',
-                    borderColor : 'rgba(151,187,205,0.8)',
-                    highlightFill : 'rgba(151,187,205,0.75)',
+                    backgroundColor : 'rgba(151,187,205,1)',
+                    borderColor : 'rgba(151,187,205,1)',
+                    highlightFill : 'rgba(151,187,205,1)',
                     highlightStroke : 'rgba(151,187,205,1)',
                     data : [plugout2]
                 }
@@ -277,9 +277,9 @@
             dataUser.push(
                     {
                         label : val.name,
-                        backgroundColor : 'rgba('+color+',220,220,0.5)',
-                        borderColor : 'rgba(220,220,220,0.8)',
-                        highlightFill: 'rgba(220,220,220,0.75)',
+                        backgroundColor : 'rgba('+color+',220,220,1)',
+                        borderColor : 'rgba(220,220,220,1)',
+                        highlightFill: 'rgba(220,220,220,1)',
                         highlightStroke: 'rgba(220,220,220,1)',
                         data : val.login_count
                     }
@@ -292,7 +292,7 @@
             datasets : [
                 {
                     // label : ['Performa'],
-                    // backgroundColor : 'rgba('+color[0]+',220,220,0.5)',
+                    // backgroundColor : 'rgba('+color[0]+',220,220,1)',
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -301,8 +301,8 @@
                         'rgba(153, 102, 255, 0.2)',
                         'rgba(255, 159, 64, 0.2)'
                     ],
-                    borderColor : 'rgba(220,220,220,0.8)',
-                    highlightFill: 'rgba(220,220,220,0.75)',
+                    borderColor : 'rgba(220,220,220,1)',
+                    highlightFill: 'rgba(220,220,220,1)',
                     highlightStroke: 'rgba(220,220,220,1)',
                     data : counts
                 }

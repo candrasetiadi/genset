@@ -20,20 +20,24 @@ class InvoiceController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = DB::table('invoices as a')
-                        ->select('a.id', 'a.invoice_no', 'a.date','a.start_date', 'a.end_date', 'a.id_customer', 'b.name as customer_name')
-                        ->leftJoin('customers as b', 'a.id_customer', '=', 'b.id')
-                        // ->leftJoin('ships as c', 'a.id_ship', '=', 'c.id')
-                        ->get();
+        if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
+            $invoices = DB::table('invoices as a')
+                            ->select('a.id', 'a.invoice_no', 'a.date','a.start_date', 'a.end_date', 'a.id_customer', 'b.name as customer_name')
+                            ->leftJoin('customers as b', 'a.id_customer', '=', 'b.id')
+                            // ->leftJoin('ships as c', 'a.id_ship', '=', 'c.id')
+                            ->get();
 
-        
-        $title = 'Invoice';
-        $fields = DB::table('fields')->get();
-        $customers = DB::table('customers')->get();
+            
+            $title = 'Invoice';
+            $fields = DB::table('fields')->get();
+            $customers = DB::table('customers')->get();
 
-        return view('admin.invoices.index', compact('invoices', 'fields', 'customers', 'title'));
+            return view('admin.invoices.index', compact('invoices', 'fields', 'customers', 'title'));
+        } else {
+            redirect('/admin/home');
+        }
     }
 
     /**

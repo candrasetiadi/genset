@@ -20,12 +20,16 @@ class CustomerController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $customers = DB::table('customers')->get();
-        $title = 'Customer';
+        if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
+            $customers = DB::table('customers')->get();
+            $title = 'Customer';
 
-        return view('admin.customers.index', compact('customers', 'title'));
+            return view('admin.customers.index', compact('customers', 'title'));
+        } else {
+            redirect('/admin/home');
+        }
     }
 
     /**
@@ -44,15 +48,46 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function generateCustomerNumber()
+    {
+        $prefix = 'CUST';
+
+        $lastNumber = DB::table('customers')
+                            ->select('customer_no')
+                            ->orderBy('id', 'desc')
+                            ->first();
+
+        if ( $lastNumber != null ) {
+
+            $numb = substr($lastNumber->customer_no, 4,3);
+
+        } else {
+            $numb = '000';
+        }
+
+        $last = $numb + 1;
+        $str_pad = str_pad($last, 3, '0', STR_PAD_LEFT);
+        $result = $prefix . $str_pad;
+
+        return $result;
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
-            'customer_no' => 'required',
             'name' => 'required',
             'email' => 'required',
             'address' => 'required',
             'phone_1' => 'required',
             'pic' => 'required'
+        ]);
+
+        $customer_no = $this->generateCustomerNumber();
+
+        $request->merge([
+            'customer_no' => $customer_no,
+            'date' => date('Y-m-d')
         ]);
 
         Customer::create($request->all());

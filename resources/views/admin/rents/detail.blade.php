@@ -185,7 +185,7 @@
 	                        <label class="form-control-label" for="date">Tanggal</label>
 	                        <div class="controls">
 	                            <div class="input-group">
-	                                <input id="date" class="form-control datetimepickers" type="text" name="date" value="">
+	                                <input id="date" class="form-control datetimepickers" type="text" name="date" value="{{ date('Y-m-d') }}">
 	                                <input type="hidden" name="id_rent" id="id_rent" value="{{ $data->id }}">
 	                                <input type="hidden" name="id" id="id" value="">
 	                                <input type="hidden" name="_method" id="method" value="POST">

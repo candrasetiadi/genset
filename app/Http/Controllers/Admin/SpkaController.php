@@ -20,18 +20,22 @@ class SpkaController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $spkas = DB::table('spkas as a')
-                        ->select('a.id', 'a.spka_no', 'a.date', 'a.id_invoice', 'b.invoice_no', 'c.name as customer_name')
-                        ->leftJoin('invoices as b', 'a.id_invoice', '=', 'b.id')
-                        ->leftJoin('customers as c', 'b.id_customer', '=', 'c.id')
-                        ->get();
+        if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
+            $spkas = DB::table('spkas as a')
+                            ->select('a.id', 'a.spka_no', 'a.date', 'a.id_invoice', 'b.invoice_no', 'c.name as customer_name')
+                            ->leftJoin('invoices as b', 'a.id_invoice', '=', 'b.id')
+                            ->leftJoin('customers as c', 'b.id_customer', '=', 'c.id')
+                            ->get();
 
-        $invoices = DB::table('invoices')->get();
-        $title = 'SPKA';
+            $invoices = DB::table('invoices')->get();
+            $title = 'SPKA';
 
-        return view('admin.spkas.index', compact('spkas', 'invoices', 'title'));
+            return view('admin.spkas.index', compact('spkas', 'invoices', 'title'));
+        } else {
+            redirect('/admin/home');
+        }
     }
 
     /**

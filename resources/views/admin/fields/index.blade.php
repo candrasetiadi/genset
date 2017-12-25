@@ -56,7 +56,7 @@
                                                     <td>
                                                         
                                                         <a href="" data-action="edit" data-id="{{ $field->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-                                                        <a href="{{ route('field.delete', $field->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                        <a href="" data="{{ $field->id }}" id="deleteRow" data-base="field" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
 
                                                     </td>
                                                 </tr>
@@ -86,7 +86,7 @@
                         <!-- {{method_field("PATCH")}} -->
                         {{ csrf_field() }}
                         
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="form-control-label" for="field_no">Nomor Lapangan</label>
                             <div class="controls">
                                 <div class="input-group">
@@ -95,7 +95,7 @@
                                     <input type="hidden" name="_method" id="method" value="POST">
                                 </div>
                             </div>
-                        </div>                           
+                        </div>    -->                        
                         <div class="form-group">
                             <label class="form-control-label" for="name">Nama</label>
                             <div class="controls">

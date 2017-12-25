@@ -19,19 +19,23 @@ class ContainerController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $containers = DB::table('containers as a')
-                        ->select('a.id', 'a.container_no', 'a.name', 'a.size', 'a.id_field', 'a.id_ship', 'a.recooling_price', 'a.monitoring_price', 'b.name as field_name', 'c.name as ship_name')
-                        ->leftJoin('fields as b', 'a.id_field', '=', 'b.id')
-                        ->leftJoin('ships as c', 'a.id_ship', '=', 'c.id')
-                        ->get();
+        if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
+            $containers = DB::table('containers as a')
+                            ->select('a.id', 'a.container_no', 'a.name', 'a.size', 'a.id_field', 'a.id_ship', 'a.recooling_price', 'a.monitoring_price', 'b.name as field_name', 'c.name as ship_name')
+                            ->leftJoin('fields as b', 'a.id_field', '=', 'b.id')
+                            ->leftJoin('ships as c', 'a.id_ship', '=', 'c.id')
+                            ->get();
 
-        $fields = DB::table('fields')->get();
-        $ships = DB::table('ships')->get();
-        $title = 'Container';
+            $fields = DB::table('fields')->get();
+            $ships = DB::table('ships')->get();
+            $title = 'Container';
 
-        return view('admin.containers.index', compact('containers', 'fields', 'ships', 'title'));
+            return view('admin.containers.index', compact('containers', 'fields', 'ships', 'title'));
+        } else {
+            return redirect('/admin/home');
+        }
     }
 
     /**

@@ -41,6 +41,7 @@
                                                 <th width="15%">Nomor</th>
                                                 <th width="15%">Kapal</th>
                                                 <th width="15%">Container</th>
+                                                <th width="15%">Lapangan</th>
                                                 <th width="10%">Set Point</th>
                                                 <th width="15%">Masuk</th>
                                                 <th width="15%">Keluar</th>
@@ -57,6 +58,7 @@
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->rent_no }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->ship_name }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->container_name }}</td>
+                                                    <td class="clickRow" data="{{ $rent->id }}">{{ $rent->field_name }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->set_point }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->date_in }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->date_out }}</td>
@@ -170,6 +172,14 @@
                             <div class="controls">
                                 <div class="input-group">
                                     <input id="set_point" class="form-control"  type="text" name="set_point" required>
+                                </div>
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <label class="form-control-label" for="set_point">Diinput Oleh</label>
+                            <div class="controls">
+                                <div class="input-group">
+                                    <input id="input_by" class="form-control"  type="text" name="input_by" value="{{ Auth::user()->name }}" disabled>
                                 </div>
                             </div>
                         </div>                        

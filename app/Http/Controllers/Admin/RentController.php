@@ -21,18 +21,26 @@ class RentController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $rents = DB::table('rents as a')
-                        ->select('a.id', 'a.rent_no', 'a.id_container', 'a.id_ship', 'a.set_point', 'a.delivery_type', 'a.date_in', 'a.date_out', 'a.status', 'b.name as container_name', 'c.name as ship_name')
-                        ->leftJoin('containers as b', 'a.id_container', '=', 'b.id')
-                        ->leftJoin('ships as c', 'a.id_ship', '=', 'c.id')
-                        ->get();
-        $containers = DB::table('containers')->get();
-        $ships = DB::table('ships')->get();
-        $title = 'Recooling & Monitoring';
+        // $this->authorize('view', $post);
+        // $request->user()->authorizeRoles('super admin');
+        if( $request->user()->hasAnyRole(['super admin', 'admin kantor', 'petugas lapangan'])) {
 
-        return view('admin.rents.index', compact('rents', 'ships', 'title'));
+            $rents = DB::table('rents as a')
+                            ->select('a.id', 'a.rent_no', 'a.id_container', 'a.id_ship', 'd.name as field_name', 'a.set_point', 'a.delivery_type', 'a.date_in', 'a.date_out', 'a.status', 'b.name as container_name', 'c.name as ship_name')
+                            ->leftJoin('containers as b', 'a.id_container', '=', 'b.id')
+                            ->leftJoin('ships as c', 'a.id_ship', '=', 'c.id')
+                            ->leftJoin('fields as d', 'b.id_field', '=', 'd.id')
+                            ->get();
+            $containers = DB::table('containers')->get();
+            $ships = DB::table('ships')->get();
+            $title = 'Recooling & Monitoring';
+
+            return view('admin.rents.index', compact('rents', 'ships', 'title'));
+        } else {
+            return redirect('/admin/home');
+        }
     }
 
     /**
@@ -221,21 +229,25 @@ class RentController extends Controller
                         ->leftJoin('ships as d', 'a.id_ship', '=', 'd.id')
                         ->groupBy('a.id')
                         ->get();
+
+        $fields = DB::table('fields')->get();
         
         $title = 'Recooling & Monitoring Refeer Container';
 
-        return view('admin.rents.refeerContainer', compact('title', 'data'));
+        return view('admin.rents.refeerContainer', compact('title', 'data', 'fields'));
     }
 
     public function generatePdf(Request $request) {
 
         $data = DB::table('rents as a')
-                        ->select(DB::raw('b.container_no, b.name, b.size, a.date_in, a.time_in, a.date_out, count(c.time_shift) as total_shift, a.set_point, a.delivery_type, d.name as ship_name, b.recooling_price, b.monitoring_price'))
+                        ->select(DB::raw('b.container_no, b.name, b.size, a.date_in, a.time_in, a.date_out, count(c.time_shift) as total_shift, a.set_point, a.delivery_type, d.name as ship_name, b.recooling_price, b.monitoring_price, e.name as field_name'))
                         ->leftJoin('containers as b', 'a.id_container', '=', 'b.id')
                         ->leftJoin('rent_details as c', 'a.id', '=', 'c.id_rent')
                         ->leftJoin('ships as d', 'a.id_ship', '=', 'd.id')
+                        ->leftJoin('fields as e', 'b.id_field', '=', 'e.id')
                         ->where('a.date_in', '>=', $request->start)
                         ->where('a.date_out', '<=', $request->end)
+                        ->where('b.id_field', $request->id_field)
                         ->groupBy('a.id')
                         ->get();
 

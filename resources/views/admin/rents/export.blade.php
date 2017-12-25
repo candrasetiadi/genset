@@ -24,6 +24,7 @@
 			<tr>
 				<th width='5%'>No</th>
 				<th width='10%'>Container</th>
+				<th width='10%'>Lapangan</th>
 				<th width='5%'>Ukuran</th>
 				<th width='10%'>Plug IN</th>
 				<th width='5%'>Shift</th>
@@ -40,6 +41,7 @@
 				<tr>
 					<td align="center">{{ $key + 1 }}</td>
 					<td align="center">{{ $value->container_no }}</td>
+					<td align="center">{{ $value->field_name }}</td>
 					<td align="center">{{ $value->size }}</td>
 					<td align="left">{{ date('d/m/Y', strtotime($value->date_in)) }} {{ $value->time_in }}</td>
 					<td align="center">{{ $value->total_shift }}</td>

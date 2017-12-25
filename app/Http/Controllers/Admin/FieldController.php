@@ -19,12 +19,16 @@ class FieldController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $fields = DB::table('fields')->get();
-        $title = 'Lapangan';
+        if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
+            $fields = DB::table('fields')->get();
+            $title = 'Lapangan';
 
-        return view('admin.fields.index', compact('fields', 'title'));
+            return view('admin.fields.index', compact('fields', 'title'));
+        } else {
+            redirect('/admin/home');
+        }
     }
 
     /**
@@ -37,6 +41,30 @@ class FieldController extends Controller
         //
     }
 
+    public function generateFieldNumber()
+    {
+        $prefix = 'FIELD';
+
+        $lastNumber = DB::table('fields')
+                            ->select('field_no')
+                            ->orderBy('id', 'desc')
+                            ->first();
+
+        if ( $lastNumber != null ) {
+
+            $numb = substr($lastNumber->field_no, 5,3);
+
+        } else {
+            $numb = '000';
+        }
+
+        $last = $numb + 1;
+        $str_pad = str_pad($last, 3, '0', STR_PAD_LEFT);
+        $result = $prefix . $str_pad;
+
+        return $result;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -46,9 +74,14 @@ class FieldController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'field_no' => 'required',
             'name' => 'required',
             'location' => 'required'
+        ]);
+
+        $field_no = $this->generateFieldNumber();
+
+        $request->merge([
+            'field_no' => $field_no
         ]);
 
         Field::create($request->all());

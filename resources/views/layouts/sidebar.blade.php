@@ -34,6 +34,17 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('users') }}"><i class="icon-people"></i> Users</a>
             </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-circle"></i> Configuration</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/configuration') }}"><i class="icon-people"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/service') }}"><i class="icon-people"></i> Our Services</a>
+                    </li>
+                </ul>
+            </li>
             <li class="divider"></li>
             <li class="nav-title">
                 Transaction

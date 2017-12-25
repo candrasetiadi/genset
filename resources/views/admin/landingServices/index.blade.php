@@ -38,10 +38,8 @@
                                     <table class="stripe hover mdl-data-table" id="settable" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th width="5%">Id</th>
-                                                <th width="15%">Tanggal</th>
-                                                <th width="40%">Invoice</th>
-                                                <th width="40%">Customer</th>
+                                                <th width="35%">Title</th>
+                                                <th width="35%">Description</th>
                                                 <th width="5%">Action</th>
                                             </tr>
                                         </thead>
@@ -49,16 +47,14 @@
                                             <tr></tr>
                                         </tfoot>
                                         <tbody>
-                                            @foreach ($spkas as $spka)
+                                            @foreach ($services as $service)
                                                 <tr>
-                                                    <td>{{ $spka->id }}</td>
-                                                    <td>{{ $spka->date }}</td>
-                                                    <td>{{ $spka->invoice_no }}</td>
-                                                    <td>{{ $spka->customer_name }}</td>
+                                                    <td>{{ $service->title }}</td>
+                                                    <td>{{ $service->description }}</td>
                                                     <td>
-                                                        <a href="{{ route('spka.exportpdf', $spka->id) }}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a>
-                                                        <a href="" data-action="edit" data-id="{{ $spka->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-                                                        <a href="{{ route('spka.delete', $spka->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                        
+                                                        <a href="" data-action="edit" data-id="{{ $service->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+                                                        
 
                                                     </td>
                                                 </tr>
@@ -76,9 +72,9 @@
         <div class="modal fade" id="primaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-primary" role="document">
                 <div class="modal-content">
-                    <form class="form" method="POST" action="{{ url('admin/spka') }}">
+                    <form class="form" method="POST" action="{{ url('admin/service') }}">
                         <div class="modal-header">
-                            <h4 class="modal-title">Tambah Data</h4>
+                            <h4 class="modal-title">Edit</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -87,28 +83,26 @@
 
                         <!-- {{method_field("PATCH")}} -->
                         {{ csrf_field() }}
+                        
+
                         <div class="form-group">
-                            <label class="form-control-label" for="date">Tanggal</label>
+                            <label class="form-control-label" for="title">Title</label>
                             <div class="controls">
                                 <div class="input-group">
-                                    <input id="date" class="form-control datetimepickers" type="text" name="date" value="" required>
+                                    <input id="title" class="form-control"  type="text" name="title">
                                     <input type="hidden" name="id" id="id" value="">
                                     <input type="hidden" name="_method" id="method" value="POST">
                                 </div>
                             </div>
-                        </div>  
+                        </div>                    
                         <div class="form-group">
-                            <label class="form-control-label" for="id_invoice">Invoice</label>
+                            <label class="form-control-label" for="description">Description</label>
                             <div class="controls">
-                                <select id="id_invoice" name="id_invoice" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
-                                    @foreach($invoices as $key => $val)
-                                        <option value="{{ $val->id }}">{{ $val->invoice_no }}</option>
-                                    @endforeach
-                                   
-                                </select>
-                            </div>
-                        </div>                   
+                                <div class="input-group">
+                                    <textarea id="description" class="form-control" name="description" ></textarea>
+                                </div>
+                            </div>                         
+                        </div>                          
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -145,7 +139,7 @@
 
             if ( recipient == 'edit' ) {
                 $.ajax({
-                    url: "{{URL::to('admin/spka')}}/"+ _this + "/edit",
+                    url: "{{URL::to('admin/service')}}/"+ _this + "/edit",
                     type: 'GET',
                     data: {
                         _method: 'GET',
@@ -156,20 +150,21 @@
 
                         console.log(response[0].customer_no)
                         var modal = $(this)
-                        $("#id_invoice").val(response[0].id_invoice)
-                        $("#date").val(response[0].date)
+                        $("#title").val(response[0].title)
+                        $("#description").val(response[0].description)
                         $("#id").val(response[0].id)
                         $("#method").val("PATCH")
 
-                        $("form").attr("action", "spka/"+ _this)
+                        $("form").attr("action", "service/"+ _this)
                     }
                 })
 
             } else {
 
-                $("#id_invoice").val("")
-                $("#date").val("")
-                $("#id").val("")
+                $("#title").val()
+                $("#description").val()
+                $("#id").val()
+                $("#method").val("POST")
             }
         })
     });

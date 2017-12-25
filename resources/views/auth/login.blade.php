@@ -19,14 +19,11 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon"><i class="icon-user"></i>
                                             </span>
-                                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="email" required autofocus>
 
-                                        @if ($errors->has('email'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('email') }}</strong>
-                                            </span>
-                                        @endif
+                                        
                                     </div>
+                                    
                                 </div>
 
                                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
@@ -35,17 +32,27 @@
                                     <div class="input-group mb-4">
                                         <span class="input-group-addon"><i class="icon-lock"></i>
                                             </span>
-                                        <input id="password" type="password" class="form-control" name="password" required>
+                                        <input id="password" type="password" class="form-control" name="password" placeholder="password" required>
 
-                                        @if ($errors->has('password'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
-                                        @endif
+                                        
                                     </div>
                                 </div>
+                                @if ($errors->has('password'))
+                                    <div>
+                                        <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('password') }}</strong>
+                                        </span>
+                                    </div>
+                                @endif
+                                @if ($errors->has('email'))
+                                    <div>
+                                        <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    </div>
+                                @endif
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
                                         <div class="checkbox">
                                             <label>
@@ -53,7 +60,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="row">
                                     <div class="col-6">
@@ -61,11 +68,11 @@
                                             Login
                                         </button>
                                     </div>
-                                    <div class="col-6 text-right">
+                                    <!-- <div class="col-6 text-right">
                                         <a class="btn btn-link px-0" href="{{ route('password.request') }}">
                                             Forgot Your Password?
                                         </a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </form>
                         </div>
