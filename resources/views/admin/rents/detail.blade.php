@@ -65,7 +65,7 @@
                         <div class="card">
                         	<div class="card-block">
                         		@if ( $data->status == 1 )
-		                        	<form class="form-horizontal" method="POST" action="{{ route('rent.update', $data->id) }}">
+		                        	<form class="form-horizontal" method="POST" action="{{ route('rent.updateDetail', $data->id) }}">
 		                        		{{method_field("PATCH")}}
 		                            	{{ csrf_field() }}
 			                            
@@ -89,7 +89,7 @@
 		                                </div>
 		                                <div class="form-group row">
 		                                	<div class="col-md-6">
-			                            		<label class="form-control-label" for="temperature_out">Suhu</label>
+			                            		<label class="form-control-label" for="temperature_out">Set Point</label>
 			                                    <div class="controls">
 			                                        <div class="input-group">
 			                                            <input id="temperature_out" class="form-control" type="text" name="temperature_out" value="{{ $data->temperature_out }}">
@@ -115,7 +115,7 @@
 					                        <td width="55%"><label>{{ $data->time_out }}</label></td>
 					                    </tr>
 					                    <tr>
-					                        <td width="40%"><label>Suhu</label></td>
+					                        <td width="40%"><label>Set Point</label></td>
 					                        <td width="5%"><label>:</label></td>
 					                        <td width="55%"><label>{{ $data->temperature_out }}</label></td>
 					                    </tr>
@@ -136,7 +136,8 @@
                                         <tr>
                                             <th width="35%">Tanggal</th>
                                             <th width="35%">Jam Shift</th>
-                                            <th width="25%">Suhu</th>
+                                            <th width="25%">Set Point</th>
+                                            <th width="25%">Dibuat Oleh</th>
                                             <th width="5%">Action</th>
                                         </tr>
                                     </thead>
@@ -149,6 +150,7 @@
                                                 <td>{{ $detail->date }}</td>
                                                 <td>{{ $timeShift[$detail->time_shift] }}</td>
                                                 <td>{{ $detail->temperature }} &deg;C</td>
+                                                <td>{{ $detail->created_by }}</td>
                                                 <td>
                                                 	@if ( $data->status == 1 )
                                                     	<a href="" data-action="edit" data-id="{{ $detail->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
@@ -189,6 +191,7 @@
 	                                <input type="hidden" name="id_rent" id="id_rent" value="{{ $data->id }}">
 	                                <input type="hidden" name="id" id="id" value="">
 	                                <input type="hidden" name="_method" id="method" value="POST">
+	                                <input type="hidden" name="created_by" value="{{ Auth::user()->id }}">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -204,7 +207,7 @@
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
-	                        <label class="form-control-label" for="temperature">Suhu</label>
+	                        <label class="form-control-label" for="temperature">Set Point</label>
 	                        <div class="controls">
 	                            <div class="input-group">
 	                                <input id="temperature" class="form-control"  type="text" name="temperature">

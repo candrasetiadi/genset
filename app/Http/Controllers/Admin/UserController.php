@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if( $request->user()->hasAnyRole(['admin', 'admin kantor'])) {
+        if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
             $users = DB::table('users')
                             ->select('users.*', 'roles.name as role_name')
                             ->leftJoin('role_user', 'users.id', '=', 'role_user.user_id')

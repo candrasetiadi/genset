@@ -90,8 +90,8 @@
                         <div class="form-group">
                             <label class="form-control-label" for="id_field">Lapangan</label>
                             <div class="controls">
-                                <select id="id_field" name="id_field" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                <select id="id_field" name="id_field" class="form-control" placeholder="Please Select" required style="width: 100%;">
+                                    <option value="">&nbsp;</option>
                                     @foreach($fields as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->name }}</option>
                                     @endforeach
@@ -106,26 +106,35 @@
                                     <input id="date" class="form-control datetimepickers" type="text" name="date" value="" required>
                                     <input type="hidden" name="id" id="id" value="">
                                     <input type="hidden" name="_method" id="method" value="POST">
+                                    <input type="hidden" name="created_by" value="{{ Auth::user()->id }}">
                                 </div>
                             </div>
                         </div>  
                         <div class="form-group">
                             <label class="form-control-label" for="id_generator">Generator</label>
                             <div class="controls">
-                                <select id="id_generator" name="id_generator" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                <select id="id_generator" name="id_generator" class="form-control" placeholder="Please Select" required style="width: 100%;">
+                                    <option value="">&nbsp;</option>
                                     @foreach($generators as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->name }}</option>
                                     @endforeach
                                    
                                 </select>
                             </div>
-                        </div>                         
+                        </div>   
+                        <div class="form-group">
+                            <label class="form-control-label" for="stock">Jumlah Stock</label>
+                            <div class="controls">
+                                <div class="input-group">
+                                    <input id="stock" class="form-control" type="text" name="stock" disabled value="{{ $fuelStocks->last_stock }} Liter">
+                                </div>
+                            </div>                         
+                        </div>                      
                         <div class="form-group">
                             <label class="form-control-label" for="usage">Jumlah Pemakaian</label>
                             <div class="controls">
                                 <div class="input-group">
-                                    <input id="usage" class="form-control" type="text" name="usage" required>
+                                    <input id="usage" class="form-control" type="text" name="usage" >
                                 </div>
                             </div>                         
                         </div>
@@ -192,9 +201,9 @@
 
                         console.log(response[0].customer_no)
                         var modal = $(this)
-                        $("#id_field").val(response[0].id_field)
+                        $("#id_field").val(response[0].id_field).trigger('change')
                         $("#date").val(response[0].date)
-                        $("#id_generator").val(response[0].id_generator)
+                        $("#id_generator").val(response[0].id_generator).trigger('change')
                         $("#usage").val(response[0].usage)
                         $("#field_operator").val(response[0].field_operator)
                         $("#unit_operator").val(response[0].unit_operator)

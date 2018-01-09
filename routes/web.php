@@ -58,12 +58,19 @@ Route::prefix('admin')->group(function () {
 	Route::resource('rent', 'Admin\RentController');
 	Route::get('rent/{id}/delete', ['as' => 'rent.delete', 'uses' => 'Admin\RentController@destroy']);
 	Route::post('rent/detail', ['as' => 'rent.storeDetail', 'uses' => 'Admin\RentController@storeDetail']);
+	Route::patch('rent/detail/{id}/update', ['as' => 'rent.updateDetail', 'uses' => 'Admin\RentController@updateDetail']);
 
-	Route::get('rent/refeerContainer/show', ['as' => 'rent.refeerContainer', 'uses' => 'Admin\RentController@refeerContainer']);
+	Route::get('refeerContainer/report', ['as' => 'rent.refeerContainer', 'uses' => 'Admin\RentController@refeerContainer']);
+	Route::get('refeerContainer/weekly-report', ['as' => 'rent.weeklyReport', 'uses' => 'Admin\RentController@weeklyReport']);
 
 	// //fuel
 	Route::resource('fuelUsage', 'Admin\FuelUsageController');
 	Route::get('fuelUsage/{id}/delete', ['as' => 'fuelUsage.delete', 'uses' => 'Admin\FuelUsageController@destroy']);
+	Route::get('fuelUsage/getStock', ['as' => 'fuelUsage.getStock', 'uses' => 'Admin\FuelUsageController@getStock']);
+
+	// //fuel stock
+	Route::resource('fuelStock', 'Admin\FuelStockController');
+	Route::get('fuelStock/{id}/delete', ['as' => 'fuelStock.delete', 'uses' => 'Admin\FuelStockController@destroy']);
 
 	// //landing
 	Route::resource('configuration', 'Admin\LandingController');
@@ -92,6 +99,7 @@ Route::prefix('admin')->group(function () {
 	Route::get('spka/{id}/exportpdf', ['as' => 'spka.exportpdf', 'uses' => 'Admin\SpkaController@generatePdf']);
 
 	Route::post('rent/exportpdf', ['as' => 'rent.exportpdf', 'uses' => 'Admin\RentController@generatePdf']);
+	Route::post('weeklyReport/exportpdf', ['as' => 'rent.weeklyPdf', 'uses' => 'Admin\RentController@weeklyGeneratePdf']);
 
 
 	

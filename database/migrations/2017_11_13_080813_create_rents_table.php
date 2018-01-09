@@ -26,7 +26,7 @@ class CreateRentsTable extends Migration
             $table->string('time_out')->nullable();
             $table->string('temperature_out')->nullable();
             $table->text('remark')->nullable();
-            $table->boolean('status')->default(1);
+            $table->enum('status', ['active', 'inactive', 'checking', 'tax', 'done'])->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });

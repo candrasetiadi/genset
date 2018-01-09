@@ -59,6 +59,12 @@
                 </ul>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/fuelStock') }}" target="_top"><i class="fa fa-user-secret"></i> Solar Masuk (Stock)</a>
+                    </li>
+                    
+                </ul>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url('admin/fuelUsage') }}" target="_top"><i class="fa fa-user-secret"></i> Bon Pemakaian Solar</a>
                     </li>
                     
@@ -84,7 +90,7 @@
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-circle"></i> Harian</a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('admin/rent/refeerContainer/show') }}" target="_top"><i class="fa fa-file"></i> RM Refeer Container</a>
+                        <a class="nav-link" href="{{ url('admin/refeerContainer/report') }}" target="_top"><i class="fa fa-file"></i> RM Refeer Container</a>
                     </li>
                     
                 </ul>
@@ -93,7 +99,7 @@
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-circle"></i> Mingguan</a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('admin/rent/refeerContainer/show') }}" target="_top"><i class="fa fa-file"></i> Recooling &amp; Monitoring</a>
+                        <a class="nav-link" href="{{ url('admin/refeerContainer/weekly-report') }}" target="_top"><i class="fa fa-file"></i> Recooling &amp; Monitoring</a>
                     </li>
                     
                 </ul>

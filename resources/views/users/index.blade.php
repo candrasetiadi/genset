@@ -19,7 +19,7 @@
                     </div>
                 </li> -->
             </ol>
-
+            
             <div class="container-fluid">
                 <div class="animated fadeIn">
                     <div class="row">
@@ -86,7 +86,7 @@
                 <div class="modal-content">
                     <form class="form" method="POST" action="{{ url('admin/users/role') }}">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New Generator</h4>
+                            <h4 class="modal-title">Edit Role</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -109,7 +109,7 @@
                                 <input type="hidden" name="user_id" value="" id="user_id">
                             </div>
                         </div>
-                                               
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

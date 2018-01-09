@@ -93,7 +93,7 @@ class ContainerController extends Controller
     public function edit(Request $request, $id)
     {
         $data = DB::table('containers')
-                        ->select('id', 'container_no', 'name', 'size', 'recooling_price', 'monitoring_price')
+                        ->select('id', 'container_no', 'name', 'size', 'id_field', 'id_ship', 'recooling_price', 'monitoring_price')
                         ->where('id', $id)
                         ->get();
         return $data;

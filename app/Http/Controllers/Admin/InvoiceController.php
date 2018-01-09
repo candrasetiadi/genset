@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Invoice;
+use App\InvoiceDetail;
 use PDF;
 
 class InvoiceController extends Controller
@@ -114,6 +115,26 @@ class InvoiceController extends Controller
 
         Invoice::create($request->all());
 
+        $details = DB::table('rents as a')
+                        ->select('a.id', 'a.rent_no', 'a.date_in', 'a.date_out', 'b.recooling_price', 'b.monitoring_price')
+                        ->leftJoin('containers as b', 'a.id_container', '=', 'b.id')
+                        ->where('status', 'done')
+                        ->where('a.date_in', '>=', date('Y-m-d', strtotime($request->start_date)))
+                        ->where('a.date_out', '<=', date('Y-m-d', strtotime($request->end_date)))
+                        ->get();
+
+        foreach ($details as $key => $detail) {
+            
+            $request->merge([
+                'invoice_no' => $invoice_no,
+                'rent_no' => $detail->rent_no,
+                'recooling_price' => $detail->recooling_price,
+                'monitoring_price' => $detail->monitoring_price
+            ]);
+
+            InvoiceDetail::create($request->all());
+        }
+
         $request->session()->flash('flash_message', 'Invoice successfully added!');
         
         return redirect()->route('invoice.index');
@@ -184,12 +205,12 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        $containers = Container::find($id);
-        $containers->delete();
+        $invoices = Invoice::find($id);
+        $invoices->delete();
 
         // redirect
-        return redirect()->route('container.index')
-                        ->with('success','container deleted successfully');
+        return redirect()->route('invoice.index')
+                        ->with('success','invoice deleted successfully');
     }
 
     public function getByShip(Request $request, $id_ship)

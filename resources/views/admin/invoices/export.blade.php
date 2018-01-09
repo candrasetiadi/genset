@@ -71,7 +71,13 @@
 		<?php 
 		
 		$subtotal = 0;
-		$sizeContainer = $dataRM[0]->total_cont .'x'. $dataRM[0]->size .'" Dan '. $dataRM[1]->total_cont .'x'. $dataRM[1]->size.'"' ;
+
+		if (!empty(array_filter($dataRM->toArray()))) {
+			$sizeContainer = $dataRM[0]->total_cont .'x'. $dataRM[0]->size .'" Dan '. $dataRM[1]->total_cont .'x'. $dataRM[1]->size.'"' ;
+		} else {
+			$sizeContainer = '';
+		}
+
 		?>
 		@foreach ($dataRM as $key=>$val)
 			<?php $total = 0; ?>
