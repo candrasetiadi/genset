@@ -10,16 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-	Route::get('/', 'Client\LandingController@index')->name('landing');
+Route::get('/', 'Client\LandingController@index')->name('landing');
 	// return view('welcome');
 
 Route::get('/admin', function () {
-
     return view('auth/login');
 });
 
-Route::get('/admin/register', function () {
+Route::get('/home', function () {
+    return redirect('/admin/home');
+});
 
+// Route::get('/admin/register', 'Auth\RegisterController@registration')->name('register');
+
+Route::get('/admin/register', function () {
     return view('auth/register');
 });
 
@@ -56,14 +60,25 @@ Route::prefix('admin')->group(function () {
 
 	// //rent
 	Route::resource('rent', 'Admin\RentController');
+	Route::resource('double-check', 'Admin\DoubleCheckController');
+	Route::get('rent/{id}/doubleCheck', ['as' => 'rent.doubleCheck', 'uses' => 'Admin\DoubleCheckController@update']);
 	Route::get('rent/{id}/delete', ['as' => 'rent.delete', 'uses' => 'Admin\RentController@destroy']);
 	Route::post('rent/detail', ['as' => 'rent.storeDetail', 'uses' => 'Admin\RentController@storeDetail']);
+	Route::patch('rent/detail/{id}/update', ['as' => 'rent.updateDetail', 'uses' => 'Admin\RentController@updateDetail']);
 
-	Route::get('rent/refeerContainer/show', ['as' => 'rent.refeerContainer', 'uses' => 'Admin\RentController@refeerContainer']);
+	Route::get('refeerContainer/report', ['as' => 'rent.refeerContainer', 'uses' => 'Admin\RentController@refeerContainer']);
+	Route::get('refeerContainer/weekly-report', ['as' => 'rent.weeklyReport', 'uses' => 'Admin\RentController@weeklyReport']);
+
+	Route::get('rent/{id}/setStatus', ['as' => 'rent.setStatus', 'uses' => 'Admin\RentController@setStatus']);
 
 	// //fuel
 	Route::resource('fuelUsage', 'Admin\FuelUsageController');
 	Route::get('fuelUsage/{id}/delete', ['as' => 'fuelUsage.delete', 'uses' => 'Admin\FuelUsageController@destroy']);
+	Route::get('fuelUsage/getStock', ['as' => 'fuelUsage.getStock', 'uses' => 'Admin\FuelUsageController@getStock']);
+
+	// //fuel stock
+	Route::resource('fuelStock', 'Admin\FuelStockController');
+	Route::get('fuelStock/{id}/delete', ['as' => 'fuelStock.delete', 'uses' => 'Admin\FuelStockController@destroy']);
 
 	// //landing
 	Route::resource('configuration', 'Admin\LandingController');
@@ -77,6 +92,8 @@ Route::prefix('admin')->group(function () {
 	Route::get('invoice/{id}/delete', ['as' => 'invoice.delete', 'uses' => 'Admin\InvoiceController@destroy']);
 	Route::post('invoice/detail', ['as' => 'invoice.storeDetail', 'uses' => 'Admin\InvoiceController@storeDetail']);
 	Route::get('invoice/textNumber', ['as' => 'invoice.textNumber', 'uses' => 'Admin\InvoiceController@textNumber']);
+
+	Route::get('invoice/{id}/setStatus', ['as' => 'invoice.setStatus', 'uses' => 'Admin\InvoiceController@setStatus']);
 
 	// //spka
 	Route::resource('spka', 'Admin\SpkaController');
@@ -92,9 +109,12 @@ Route::prefix('admin')->group(function () {
 	Route::get('spka/{id}/exportpdf', ['as' => 'spka.exportpdf', 'uses' => 'Admin\SpkaController@generatePdf']);
 
 	Route::post('rent/exportpdf', ['as' => 'rent.exportpdf', 'uses' => 'Admin\RentController@generatePdf']);
+	Route::post('weeklyReport/exportpdf', ['as' => 'rent.weeklyPdf', 'uses' => 'Admin\RentController@weeklyGeneratePdf']);
 
+	//send email
+	Route::get('invoice/{id}/mail', ['as' => 'invoice.mail', 'uses' => 'Admin\InvoiceController@sendMail']);
 
-	
+	Route::get('rent/{id}/mail', ['as' => 'rent.mail', 'uses' => 'Admin\RentController@sendMail']);
 });
 
 Auth::routes();

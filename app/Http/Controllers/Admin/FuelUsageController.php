@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\FuelUsage;
+use App\FuelStock;
 use PDF;
 
 class FuelUsageController extends Controller
@@ -31,11 +32,15 @@ class FuelUsageController extends Controller
 
             $fields = DB::table('fields')->get();
             $generators = DB::table('generators')->get();
+            $fuelStocks = DB::table('fuel_stocks')
+                        ->orderBy('id', 'desc')
+                        ->first();
+
             $title = 'Bon Pemakaian Solar';
 
-            return view('admin.fuelUsages.index', compact('fuelUsages', 'fields', 'generators', 'title'));
+            return view('admin.fuelUsages.index', compact('fuelUsages', 'fields', 'generators', 'fuelStocks', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 
@@ -57,14 +62,31 @@ class FuelUsageController extends Controller
      */
     public function store(Request $request)
     {
+        $stock = DB::table('fuel_stocks')
+                        ->orderBy('id', 'desc')
+                        ->first();
+
         $this->validate($request, [
             'id_field' => 'required',
             'date' => 'required',
             'id_generator' => 'required',
-            'usage' => 'required'
+            'usage' => 'required|numeric|max:'. $stock->last_stock
         ]);
 
         FuelUsage::create($request->all());
+
+        // insert into tabel stock as solar out
+        
+        $last_stock = $stock->last_stock - $request->usage;
+
+        $request->merge([
+            'date' => date('Y-m-d'),
+            'solar_out' => $request->usage,
+            'last_stock' => $last_stock,
+            'created_by' => $request->created_by
+        ]);
+
+        FuelStock::create($request->all());
 
         $request->session()->flash('flash_message', 'Fuel Usage successfully added!');
         
@@ -94,6 +116,15 @@ class FuelUsageController extends Controller
                         ->select('a.id', 'a.id_field', 'a.date', 'a.id_generator', 'a.usage', 'a.price','a.field_operator', 'a.unit_operator')
                         ->where('id', $id)
                         ->get();
+        return $data;
+    }
+
+    public function getStock(Request $request)
+    {
+        $data = DB::table('fuel_stocks as a')
+                        ->orderBy('a.id', 'desc')
+                        ->get();
+        
         return $data;
     }
 

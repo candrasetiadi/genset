@@ -29,12 +29,16 @@ class SpkaController extends Controller
                             ->leftJoin('customers as c', 'b.id_customer', '=', 'c.id')
                             ->get();
 
-            $invoices = DB::table('invoices')->get();
+            $invoices = DB::table('invoices as a')
+                            ->leftJoin('spkas as b', 'a.id', '=', 'b.id_invoice')
+                            ->where('a.id', '!=', 'b.id_invoice')
+                            ->get();
+            // dd($invoices);
             $title = 'SPKA';
 
             return view('admin.spkas.index', compact('spkas', 'invoices', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 

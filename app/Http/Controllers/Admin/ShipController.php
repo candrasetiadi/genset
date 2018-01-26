@@ -27,7 +27,7 @@ class ShipController extends Controller
 
             return view('admin.ships.index', compact('ships', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 

@@ -101,7 +101,7 @@
                             <label class="form-control-label" for="id_invoice">Invoice</label>
                             <div class="controls">
                                 <select id="id_invoice" name="id_invoice" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                    <option value="">&nbsp;</option>
                                     @foreach($invoices as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->invoice_no }}</option>
                                     @endforeach

@@ -15,6 +15,6 @@ class LandingController extends Controller
     	$data = DB::table('landings')->first();
     	$services = DB::table('landing_services')->get();
 
-    	return view('landing', compact('data', 'services'));
+    	return view('landingPage', compact('data', 'services'));
     }
 }

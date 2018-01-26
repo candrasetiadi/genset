@@ -226,7 +226,7 @@
             datasets : [
                 {
                     label: '(Liter)',
-                    backgroundColor : 'rgba(151,187,205,0.2)',
+                    backgroundColor : 'rgba(151,187,205,1)',
                     borderColor : 'rgba(151,187,205,1)',
                     pointBackgroundColor : 'rgba(151,187,205,1)',
                     pointBorderColor : '#fff',
@@ -294,12 +294,12 @@
                     // label : ['Performa'],
                     // backgroundColor : 'rgba('+color[0]+',220,220,1)',
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
                     ],
                     borderColor : 'rgba(220,220,220,1)',
                     highlightFill: 'rgba(220,220,220,1)',

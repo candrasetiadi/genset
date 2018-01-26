@@ -28,7 +28,7 @@ class CustomerController extends Controller
 
             return view('admin.customers.index', compact('customers', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 

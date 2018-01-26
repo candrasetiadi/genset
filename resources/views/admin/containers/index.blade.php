@@ -115,8 +115,8 @@
                         <div class="form-group">
                             <label class="form-control-label" for="size">Ukuran</label>
                             <div class="controls">
-                                <select id="size" name="size" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                <select id="size" name="size" class="form-control" placeholder="Please Select" required style="width: 100%;">
+                                    <option value="">&nbsp;</option>
                                     <option value="20">20</option>
                                     <option value="40">40</option>
                                    
@@ -126,8 +126,8 @@
                         <div class="form-group">
                             <label class="form-control-label" for="id_field">Nama Lapangan</label>
                             <div class="controls">
-                                <select id="id_field" name="id_field" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                <select id="id_field" name="id_field" class="form-control" placeholder="Please Select" required style="width: 100%;">
+                                    <option value="">&nbsp;</option>
                                     @foreach($fields as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->name }}</option>
                                     @endforeach
@@ -138,8 +138,8 @@
                         <div class="form-group">
                             <label class="form-control-label" for="id_ship">Nomor Kapal</label>
                             <div class="controls">
-                                <select id="id_ship" name="id_ship" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                <select id="id_ship" name="id_ship" class="form-control" placeholder="Please Select" required style="width: 100%;">
+                                    <option value="">&nbsp;</option>
                                     @foreach($ships as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->ship_no }}</option>
                                     @endforeach
@@ -211,9 +211,9 @@
                         var modal = $(this)
                         $("#container_no").val(response[0].container_no)
                         $("#name").val(response[0].name)
-                        $("#size").val(response[0].size)
-                        $("#field_no").val(response[0].field_no)
-                        $("#ship_no").val(response[0].ship_no)
+                        $("#size").val(response[0].size).trigger('change')
+                        $("#id_field").val(response[0].id_field).trigger('change')
+                        $("#id_ship").val(response[0].id_ship).trigger('change')
                         $("#recooling_price").val(response[0].recooling_price)
                         $("#monitoring_price").val(response[0].monitoring_price)
                         $("#id").val(response[0].id)
@@ -228,8 +228,8 @@
                 $("#container_no").val("")
                 $("#name").val("")
                 $("#size").val("")
-                $("#field_no").val("")
-                $("#ship_no").val("")
+                $("#id_field").val("")
+                $("#id_ship").val("")
                 $("#recooling_price").val("")
                 $("#monitoring_price").val("")
                 $("#id").val("")

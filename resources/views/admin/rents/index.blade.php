@@ -31,10 +31,11 @@
                                 </div>
                                 <div class="card-block">
 
-                                    <button type="button" class="btn btn-primary" data-action="add" data-toggle="modal" data-target="#primaryModal" data="">
-                                        <i class="fa fa-plus"></i> Add
-                                    </button>
-
+                                    @if (Auth::user()->id_role != '2')
+                                        <button type="button" class="btn btn-primary" data-action="add" data-toggle="modal" data-target="#primaryModal" data="">
+                                            <i class="fa fa-plus"></i> Add
+                                        </button>
+                                    @endif
                                     <table class="stripe hover mdl-data-table" id="settable" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
@@ -60,13 +61,36 @@
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->container_name }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->field_name }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->set_point }}</td>
-                                                    <td class="clickRow" data="{{ $rent->id }}">{{ $rent->date_in }}</td>
+                                                    <td class="clickRow" data="{{ $rent->id }}">{{ date('d-m-Y', strtotime($rent->date_in)) }} {{ $rent->time_in }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->date_out }}</td>
-                                                    <td class="clickRow" data="{{ $rent->id }}">@if ($rent->status == 1) {{ 'Aktif' }} @else {{ 'Selesai' }} @endif</td>
                                                     <td>
-                                                        <!-- <a href="{{ route('rent.exportpdf', $rent->id) }}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a> -->
-                                                        <a href="" data-action="edit" data-id="{{ $rent->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-                                                        <a href="{{ route('rent.delete', $rent->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                        <!-- @if (Auth::user()->id_role != '2')
+                                                            <select id="updateStatus" name="updateStatus" class="form-control" placeholder="Please Select" required style="width: 100%;" data="{{ $rent->id }}">
+
+                                                                @foreach ($status as $key => $value)
+                                                                    @if ($key == $rent->status)
+                                                                        <option value="{{ $key }}" selected>{{ $value }}</option>  
+                                                                    @elseif ($key == 'active' || $key == 'inactive')
+                                                                        <option value="{{ $key }}" disabled>{{ $value }}</option>
+                                                                    @else
+                                                                        <option value="{{ $key }}">{{ $value }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        @else
+                                                            {{ $rent->status }}
+                                                        @endif -->
+                                                        {{ $rent->status }}
+                                                    </td>
+                                                    <td>
+                                                        @if (Auth::user()->id_role != '2')
+                                                            <!-- <a href="{{ route('rent.exportpdf', $rent->id) }}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a> -->
+                                                            @if ($rent->status == 'active')
+                                                            <a href="" data-action="edit" data-id="{{ $rent->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+
+                                                            <a href="{{ route('rent.delete', $rent->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                            @endif
+                                                        @endif
 
                                                     </td>
                                                 </tr>
@@ -108,7 +132,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="id_ship">Kapal</label>
                             <div class="controls">
-                                <select id="id_ship" name="id_ship" class="form-control" placeholder="Please Select" required>
+                                <select id="id_ship" name="id_ship" class="form-control" placeholder="Please Select" required style="width: 100%;">
                                     <option value="">&nbsp;</option>
                                     @foreach($ships as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->name }}</option>
@@ -125,28 +149,21 @@
                         <div class="form-group">
                             <label class="form-control-label" for="id_container">Container</label>
                             <div class="controls">
-                                <select id="id_container" name="id_container" class="form-control" placeholder="Please Select" required>
+                                <select id="id_container" name="id_container" class="form-control" placeholder="Please Select" required style="width: 100%;">
                                     <option value="">&nbsp;</option>                                   
                                 </select>
-                                    
-                                <input type="hidden" name="id" id="id" value="">
-                                <input type="hidden" name="_method" id="method" value="POST">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-control-label" for="delivery_type">Tipe Pengiriman</label>
                             <div class="controls">
-                                <select id="delivery_type" name="delivery_type" class="form-control" placeholder="Please Select" required>
+                                <select id="delivery_type" name="delivery_type" class="form-control" placeholder="Please Select" required style="width: 100%;">
                                     <option value="">&nbsp;</option>
                                     <option value="export">Export</option>
                                     <option value="import">Import</option>
                                    
                                 </select>
-                                    
-                                <input type="hidden" name="id" id="id" value="">
-                                <input type="hidden" name="_method" id="method" value="POST">
-                                <input type="hidden" name="created_by" value="{{ Auth::user()->id }}">
                             </div>
                         </div>
 
@@ -232,7 +249,10 @@
 
                         console.log(response[0].customer_no)
                         var modal = $(this)
-                        $("#id_container").val(response[0].id_container)
+                        $("#id_ship").val(response[0].id_ship).trigger('change')
+                        $("#id_container").val(response[0].id_container).trigger('change')
+                        $("#delivery_type").val(response[0].delivery_type).trigger('change')
+                        $("#time_in").val(response[0].time_in)
                         $("#date_in").val(response[0].date_in)
                         $("#set_point").val(response[0].set_point)
                         $("#id").val(response[0].id)
@@ -244,7 +264,10 @@
 
             } else {
 
+                $("#id_ship").val("")
                 $("#id_container").val("")
+                $("#delivery_type").val("")
+                $("#time_in").val("")
                 $("#date_in").val("")
                 $("#set_point").val("")
                 $("#id").val("")
@@ -273,6 +296,28 @@
                         $("#id_container").append('<option value=' + val.id + '>' + val.name + '</option>')
                         $("#id_container").select2()
                     })
+                }
+            })
+        })
+
+        $(document).on('change', '#updateStatus', function(e){
+            e.preventDefault()
+
+            var _this = $(this).val(),
+                id = $(this).attr('data')
+
+            $.ajax({
+                url: "{{URL::to('admin/rent')}}/"+ _this + "/setStatus",
+                type: 'GET',
+                data: {
+                    _method: 'GET',
+                    status : _this,
+                    id:id,
+                    _token:     '{{ csrf_token() }}'
+                },
+                success: function(response){
+
+                    location.reload();
                 }
             })
         })

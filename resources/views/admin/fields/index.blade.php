@@ -101,6 +101,8 @@
                             <div class="controls">
                                 <div class="input-group">
                                     <input id="name" class="form-control" type="name" name="name" required>
+                                    <input type="hidden" name="id" id="id" value="">
+                                    <input type="hidden" name="_method" id="method" value="POST">
                                 </div>
                             </div>                         
                         </div>

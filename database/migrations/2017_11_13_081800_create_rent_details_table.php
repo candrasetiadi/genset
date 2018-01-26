@@ -19,6 +19,7 @@ class CreateRentDetailsTable extends Migration
             $table->date('date');
             $table->string('time_shift');
             $table->string('temperature');
+            $table->integer('created_by');
             $table->timestamps();
         });
     }

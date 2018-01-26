@@ -10,6 +10,7 @@ class RentDetail extends Model
         'id_rent',
         'date', 
         'time_shift', 
-        'temperature'
+        'temperature',
+        'created_by'
     ];
 }

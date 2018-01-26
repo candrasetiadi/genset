@@ -13,6 +13,7 @@ class FuelUsage extends Model
         'usage',
         'price',
         'field_operator',
-        'unit_operator'
+        'unit_operator',
+        'created_by',
     ];
 }

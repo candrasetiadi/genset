@@ -71,7 +71,19 @@
 		<?php 
 		
 		$subtotal = 0;
-		$sizeContainer = $dataRM[0]->total_cont .'x'. $dataRM[0]->size .'" Dan '. $dataRM[1]->total_cont .'x'. $dataRM[1]->size.'"' ;
+
+		if (!empty(array_filter($dataRM->toArray()))) {
+
+			if (count($dataRM) == 1) {
+				$sizeContainer = $dataRM[0]->total_cont .'x'. $dataRM[0]->size ;
+			} else {
+				$sizeContainer = $dataRM[0]->total_cont .'x'. $dataRM[0]->size .'" Dan '. $dataRM[1]->total_cont .'x'. $dataRM[1]->size.'"' ;
+			}
+
+		} else {
+			$sizeContainer = '';
+		}
+
 		?>
 		@foreach ($dataRM as $key=>$val)
 			<?php $total = 0; ?>
@@ -265,20 +277,45 @@
 			</tr>
 		</thead>
 		<tbody>
-			
+			@php 
+				$subtotal = 0;
+				$ppn = 0;
+				$grandtotal = 0;
+			@endphp
+			@foreach ( $dataRent as $key => $value )
+				
+				@php 
+					$subtotal += ($value->total_shift * $value->recooling_price) + ($value->total_shift * $value->monitoring_price); 
+				@endphp
+				<tr>
+					<td align="center">{{ $key + 1 }}</td>
+					<td align="center">{{ $value->container_no }}</td>
+					<td align="center">{{ $value->size }}</td>
+					<td align="center">{{ $value->ship_name }}</td>
+					<td align="center">{{ $value->total_shift }}</td>
+					<td align="right">Rp. {{ number_format($value->recooling_price,0,',','.') }}</td>
+					<td align="right">Rp. {{ number_format($value->monitoring_price,0,',','.') }}</td>
+					<td align="right">Rp. {{ number_format(($value->total_shift * $value->recooling_price) + ($value->total_shift * $value->monitoring_price),0,',','.') }}</td>
+				</tr>
+			@endforeach
+
+			@php 
+				$ppn = $subtotal * 10 / 100;
+				$grandtotal = $subtotal + $ppn;
+			@endphp
 		</tbody>
 		<tfoot>
 			<tr>
 				<th colspan="7">JUMLAH</th>
-				<th align="right">Rp. </th>
+				<th align="right">Rp. {{ number_format($subtotal, 0,',','.') }} </th>
 			</tr>
 			<tr>
 				<th colspan="7">PPN 10%</th>
-				<th align="right">Rp. </th>
+				<th align="right">Rp. {{ number_format($ppn, 0,',','.') }} </th>
 			</tr>
 			<tr>
 				<th colspan="7">TOTAL</th>
-				<th align="right">Rp. </th>
+				<th align="right">Rp. {{ number_format($grandtotal, 0,',','.') }} </th>
 			</tr>
 		</tfoot>
 

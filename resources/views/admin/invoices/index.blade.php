@@ -43,6 +43,8 @@
                                                 <th width="35%">Nomor</th>
                                                 <th width="35%">Periode</th>
                                                 <th width="25%">Customer</th>
+                                                <th width="25%">Long Stay</th>
+                                                <th width="25%">Status</th>
                                                 <th width="5%">Action</th>
                                             </tr>
                                         </thead>
@@ -56,9 +58,26 @@
                                                     <td>{{ date('d M Y', strtotime($invoice->start_date)) }} s/d {{ date('d M Y', strtotime($invoice->end_date)) }}</td>
                                                     <td>{{ $invoice->customer_name }}</td>
                                                     <td>
+                                                        @if ($invoice->warning)
+                                                            <span class="badge badge-danger"><i class="fa fa-times"></i></span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <select id="updateStatus" name="updateStatus" class="form-control" placeholder="Please Select" required style="width: 100%;" data="{{ $invoice->id }}">
+                                                            @foreach ($status as $key => $value)
+                                                                @if ($key == $invoice->status)
+                                                                    
+                                                                    <option value="{{ $key }}" selected>{{ $value }}</option>
+                                                                @else
+                                                                    <option value="{{ $key }}">{{ $value }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
                                                         <a href="{{ route('invoice.exportpdf', $invoice->id) }}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a>
-                                                        <a href="" data-action="edit" data-id="{{ $invoice->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-                                                        <a href="{{ route('invoice.delete', $invoice->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                        <!-- <a href="" data-action="edit" data-id="{{ $invoice->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a> -->
+                                                        <!-- <a href="{{ route('invoice.delete', $invoice->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a> -->
 
                                                     </td>
                                                 </tr>
@@ -90,8 +109,8 @@
                         <div class="form-group">
                             <label class="form-control-label" for="id_field">Lapangan</label>
                             <div class="controls">
-                                <select id="id_field" name="id_field" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                <select id="id_field" name="id_field" class="form-control" placeholder="Please Select" required style="width: 100%;">
+                                    <option value="">&nbsp;</option>
                                     @foreach($fields as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->name }}</option>
                                     @endforeach
@@ -102,13 +121,21 @@
                         <div class="form-group">
                             <label class="form-control-label" for="id_customer">Customer</label>
                             <div class="controls">
-                                <select id="id_customer" name="id_customer" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                <select id="id_customer" name="id_customer" class="form-control" placeholder="Please Select" required style="width: 100%;">
+                                    <option value="">&nbsp;</option>
                                     @foreach($customers as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->name }}</option>
                                     @endforeach
                                    
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="tax_invoice">Faktur Pajak</label>
+                            <div class="controls">
+                                <div class="input-group">
+                                    <input id="tax_invoice" class="form-control"  type="text" name="tax_invoice">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -147,7 +174,23 @@
     
     $(document).ready(function() {
 
+        var status = $("#updateStatus").val()
+
+        if (status == 'paid') {
+            $("#updateStatus").prop("disabled", true)
+        } else {
+            $("#updateStatus").prop("disabled", false)
+        }
+
         $('#settable').DataTable({
+
+            "createdRow": function( row, data, dataIndex){
+                
+                if( data[3] == true ){
+                    $(row).css({"background-color":"yellow"})
+                }
+            },
+
             fixedHeader: true,
             scrollY: 500,
             columnDefs: [
@@ -165,7 +208,7 @@
 
             if ( recipient == 'edit' ) {
                 $.ajax({
-                    url: "{{URL::to('admin/fuelUsage')}}/"+ _this + "/edit",
+                    url: "{{URL::to('admin/invoice')}}/"+ _this + "/edit",
                     type: 'GET',
                     data: {
                         _method: 'GET',
@@ -176,29 +219,47 @@
 
                         console.log(response[0].customer_no)
                         var modal = $(this)
-                        $("#id_field").val(response[0].id_field)
-                        $("#date").val(response[0].date)
-                        $("#id_generator").val(response[0].id_generator)
-                        $("#usage").val(response[0].usage)
-                        $("#field_operator").val(response[0].field_operator)
-                        $("#unit_operator").val(response[0].unit_operator)
+                        $("#id_field").val(response[0].id_field).trigger('change')
+                        $("#id_customer").val(response[0].id_customer).trigger('change')
+                        $("#start_date").val(response[0].start_date)
+                        $("#end_date").val(response[0].end_date)
                         $("#id").val(response[0].id)
                         $("#method").val("PATCH")
 
-                        $("form").attr("action", "fuelUsage/"+ _this)
+                        $("form").attr("action", "invoice/"+ _this)
                     }
                 })
 
             } else {
 
                 $("#id_field").val("")
-                $("#date").val("")
-                $("#id_generator").val("")
-                $("#usage").val("")
-                $("#field_operator").val("")
-                $("#unit_operator").val("")
+                $("#id_customer").val("")
+                $("#start_date").val("")
+                $("#end_date").val("")
                 $("#id").val("")
             }
+        })
+
+        $(document).on('change', '#updateStatus', function(e){
+            e.preventDefault()
+
+            var _this = $(this).val(),
+                id = $(this).attr('data')
+
+            $.ajax({
+                url: "{{URL::to('admin/invoice')}}/"+ _this + "/setStatus",
+                type: 'GET',
+                data: {
+                    _method: 'GET',
+                    status : _this,
+                    id:id,
+                    _token:     '{{ csrf_token() }}'
+                },
+                success: function(response){
+                    location.reload();
+                    
+                }
+            })
         })
     });
 </script>
