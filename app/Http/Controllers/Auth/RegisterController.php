@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -45,6 +46,14 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+    protected function registration()
+    {
+        $roles = DB::table('roles')->get();
+
+        return view('auth.register', compact('roles'));
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -63,7 +72,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return $post = User::create([
             'username' => $data['username'],
             'name' => $data['name'],
             'email' => $data['email'],

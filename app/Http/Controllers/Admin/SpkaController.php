@@ -38,7 +38,7 @@ class SpkaController extends Controller
 
             return view('admin.spkas.index', compact('spkas', 'invoices', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 

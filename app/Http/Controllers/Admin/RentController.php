@@ -33,11 +33,19 @@ class RentController extends Controller
                             ->leftJoin('ships as c', 'a.id_ship', '=', 'c.id')
                             ->leftJoin('fields as d', 'b.id_field', '=', 'd.id')
                             ->get();
+
+            $status = [
+                'active' => 'Active',
+                'inactive' => 'Inactive',
+                'checking' => 'Double Check',
+                'tax' => 'Tax Check',
+                'done' => 'Done',
+            ];
             $containers = DB::table('containers')->get();
             $ships = DB::table('ships')->get();
             $title = 'Recooling & Monitoring';
 
-            return view('admin.rents.index', compact('rents', 'ships', 'title'));
+            return view('admin.rents.index', compact('rents', 'ships', 'title', 'status'));
         } else {
             return redirect('/admin/home');
         }
@@ -200,10 +208,31 @@ class RentController extends Controller
             'temperature_out' => 'required'
         ]);
 
-        $status = 'inactive';
+        $status = 'checking';
 
         $request->merge([
             'status' => $status
+        ]);
+
+        $input = $request->all();
+
+        $rent->fill($input)->save();
+
+        $request->session()->flash('flash_message', 'Detail successfully updated!');
+        
+        return redirect()->route('rent.index');
+    }
+
+    public function setStatus(Request $request)
+    {
+        $rent = Rent::findOrFail($request->id);
+
+        $this->validate($request, [
+
+        ]);
+
+        $request->merge([
+            'status' => $request->status
         ]);
 
         $input = $request->all();
@@ -253,7 +282,7 @@ class RentController extends Controller
 
         $fields = DB::table('fields')->get();
         
-        $title = 'Recooling & Monitoring Refeer Container';
+        $title = 'Laporan Harian';
 
         return view('admin.rents.refeerContainer', compact('title', 'data', 'fields'));
     }
@@ -280,7 +309,7 @@ class RentController extends Controller
 
     public function weeklyReport()
     {
-        $title = 'Refeer Container - Laporan Mingguan';
+        $title = 'Laporan Mingguan';
 
         return view('admin.rents.weeklyReport', compact('title'));
     }
@@ -292,6 +321,7 @@ class RentController extends Controller
                         ->where('status', 'pending')
                         ->where('a.start_date', '>=', $request->start)
                         ->where('a.end_date', '<=', $request->end)
+                        ->where('status', 'pending')
                         ->get();
 
         $total = [];
@@ -327,7 +357,7 @@ class RentController extends Controller
                         ->select(DB::raw('c.size as size,count(b.time_shift) as total_shift,c.recooling_price as recooling_price,c.monitoring_price as monitoring_price'))
                         ->leftJoin('rent_details as b', 'a.id', '=', 'b.id_rent')
                         ->leftJoin('containers as c', 'a.id_container', '=', 'c.id')
-                        ->where('a.status', 'inactive')
+                        ->where('a.status', 'done')
                         ->groupBy('c.size')
                         ->get();
 
@@ -365,5 +395,27 @@ class RentController extends Controller
 
         $pdf = PDF::loadView('admin.rents.exportWeekly', compact('getDones', 'total', 'totalActive', 'totalInactive', 'totalChecking', 'totalTax'), [], ['format' => 'A4-L']);
         return $pdf->stream('weekly-report-'. date('d-M-Y') .'.pdf');
+    }
+
+    public function sendMail($id)
+    {
+        $data = DB::table('invoices as a')
+                    ->select('a.id', 'a.invoice_no', 'a.date','a.start_date', 'a.end_date', 'a.id_customer', 'b.name as customer_name', 'b.address', 'a.id_field', 'c.name as field_name')
+                    ->leftJoin('customers as b', 'a.id_customer', '=', 'b.id')
+                    ->leftJoin('fields as c', 'a.id_field', '=', 'c.id')
+                    ->where('a.id', $id)
+                    ->first();
+
+        Mail::send('admin.invoices.email', ['data' => $data], function ($message) use ($data)
+        {
+            $inv = str_replace("/", "_", $data->invoice_no);
+            $message->to('candrasetiadiwahyu@gmail.com');
+            $message->subject($data->invoice_no);
+            $message->attach('report/invoice/'. $inv .'.pdf', [
+                        'as' => $data->invoice_no.'.pdf',
+                        'mime' => 'application/pdf',
+                    ]);
+
+        });
     }
 }

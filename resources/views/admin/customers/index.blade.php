@@ -200,6 +200,7 @@
                         $("#customer_no").val(response[0].customer_no)
                         $("#email").val(response[0].email)
                         $("#name").val(response[0].name)
+                        $("#address").val(response[0].address)
                         $("#phone_1").val(response[0].phone_1)
                         $("#phone_2").val(response[0].phone_2)
                         $("#pic").val(response[0].pic)

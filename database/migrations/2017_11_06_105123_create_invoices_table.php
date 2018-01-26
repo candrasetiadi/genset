@@ -22,6 +22,7 @@ class CreateInvoicesTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('subtotal')->nullable();
+            $table->string('tax_invioce')->nullable();
             $table->enum('status', ['pending', 'paid', 'long stay'])->default('pending');
             $table->timestamps();
         });

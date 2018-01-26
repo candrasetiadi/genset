@@ -38,7 +38,7 @@ class UserController extends Controller
 
             return view('users.index', compact('users', 'roles'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 
@@ -94,13 +94,23 @@ class UserController extends Controller
         ]);
 
         if( $check == null ) {
+            
             DB::table('role_user')->insert(
                 ['role_id' => $request->role_id, 'user_id' => $request->user_id]
             );
+
+            DB::table('users')
+                    ->where('id', $request->user_id)
+                    ->update(['id_role' => $request->role_id]);
+
         } else {
             DB::table('role_user')
                     ->where('user_id', $request->user_id)
                     ->update(['role_id' => $request->role_id, 'user_id' => $request->user_id]);
+
+            DB::table('users')
+                    ->where('id', $request->user_id)
+                    ->update(['id_role' => $request->role_id]);
         }
 
         $request->session()->flash('flash_message', 'roles successfully updated!');

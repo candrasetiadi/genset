@@ -99,8 +99,8 @@
                         <div class="form-group">
                             <label class="form-control-label" for="role_id">Role</label>
                             <div class="controls">
-                                <select id="role_id" name="role_id" class="form-control" placeholder="Please Select" required>
-                                    <option value="0">&nbsp;</option>
+                                <select id="role_id" name="role_id" class="form-control" placeholder="Please Select" required style="width: 100%;">
+                                    <option value="">&nbsp;</option>
                                     @foreach($roles as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->name }}</option>
                                     @endforeach
@@ -152,13 +152,13 @@
 
                         console.log(response[0])
                         var modal = $(this)
-                        if( response[0].id != undefined ) {
+                        if( response[0] != undefined ) {
                             $("#role_id").val(response[0].id).trigger('change')
                         } else {
-                            $("#role_id").val().trigger('change')
+                            $("#role_id").val('').trigger('change')
                         }
                         $("#user_id").val(_this)
-                        $("#method").val("PATCH")
+                        // $("#method").val("PATCH")
 
                         $("form").attr("action", "users/role/"+ _this + "/update")
                     }
@@ -166,12 +166,7 @@
 
             } else {
 
-                $("#id_field").val("")
-                $("#date").val("")
-                $("#id_generator").val("")
-                $("#usage").val("")
-                $("#field_operator").val("")
-                $("#unit_operator").val("")
+                $("#role_id").val("").trigger('change')
                 $("#id").val("")
             }
         })

@@ -33,7 +33,7 @@ class FuelStockController extends Controller
 
             return view('admin.fuelStocks.index', compact('fuelStocks', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 

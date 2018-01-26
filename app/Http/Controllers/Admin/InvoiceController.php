@@ -9,6 +9,9 @@ use App\Invoice;
 use App\InvoiceDetail;
 use PDF;
 
+use App\Mail\InvoiceMail;
+use Illuminate\Support\Facades\Mail;
+
 class InvoiceController extends Controller
 {
     /**
@@ -25,19 +28,29 @@ class InvoiceController extends Controller
     {
         if( $request->user()->hasAnyRole(['super admin', 'admin kantor'])) {
             $invoices = DB::table('invoices as a')
-                            ->select('a.id', 'a.invoice_no', 'a.date','a.start_date', 'a.end_date', 'a.id_customer', 'b.name as customer_name')
+                            ->select('a.id', 'a.invoice_no', 'a.date','a.start_date', 'a.end_date', 'a.id_customer', 'b.name as customer_name', 'a.status')
                             ->leftJoin('customers as b', 'a.id_customer', '=', 'b.id')
                             // ->leftJoin('ships as c', 'a.id_ship', '=', 'c.id')
                             ->get();
 
+            foreach ($invoices as $key => $value) {
+                $duedate = date('d/m/Y',strtotime('+30 days',strtotime(str_replace('/', '-', $value->date))));
+                if ($duedate >= date('d/m/Y')) {
+                    $invoices[$key]->warning = true;
+                } else {
+                    $invoices[$key]->warning = false;
+                }
+            }
+
+            $status = ['pending' => 'Pending', 'paid' => 'Paid'];
             
             $title = 'Invoice';
             $fields = DB::table('fields')->get();
             $customers = DB::table('customers')->get();
 
-            return view('admin.invoices.index', compact('invoices', 'fields', 'customers', 'title'));
+            return view('admin.invoices.index', compact('invoices', 'fields', 'customers', 'title', 'status'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 
@@ -197,6 +210,27 @@ class InvoiceController extends Controller
                         ->with('success','Container updated successfully');
     }
 
+    public function setStatus(Request $request)
+    {
+        $rent = Invoice::findOrFail($request->id);
+
+        $this->validate($request, [
+
+        ]);
+
+        $request->merge([
+            'status' => $request->status
+        ]);
+
+        $input = $request->all();
+
+        $rent->fill($input)->save();
+
+        $request->session()->flash('flash_message', 'Detail successfully updated!');
+        
+        return redirect()->route('invoice.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -230,17 +264,20 @@ class InvoiceController extends Controller
                         ->first();
 
         $dataRM = DB::table('invoice_view')
-                        ->where('date_in', '>', $data->start_date)
-                        ->where('date_in', '<', $data->end_date)
+                        ->where('date_in', '>=', $data->start_date)
+                        ->where('date_out', '<=', $data->end_date)
+                        ->get();        
+
+        $dataRent = DB::table('rents as a')
+                        ->select(DB::raw('b.container_no, b.name, b.size, a.date_in, a.time_in, a.date_out, count(c.time_shift) as total_shift, a.set_point, a.delivery_type, d.name as ship_name, b.recooling_price, b.monitoring_price'))
+                        ->leftJoin('containers as b', 'a.id_container', '=', 'b.id')
+                        ->leftJoin('rent_details as c', 'a.id', '=', 'c.id_rent')
+                        ->leftJoin('ships as d', 'a.id_ship', '=', 'd.id')
+                        ->where('a.date_in', '>=', $data->start_date)
+                        ->where('a.date_out', '<=', $data->end_date)
+                        ->where('a.status', 'done')
+                        ->groupBy('a.id')
                         ->get();
-
-        // $dataBA = DB::table('invoices as a')
-        //                 ->select('a.id', 'a.invoice_no', 'a.date','a.start_date', 'a.end_date', 'a.id_customer', 'b.name as customer_name', 'b.address')
-        //                 ->leftJoin('customers as b', 'a.id_customer', '=', 'b.id')
-        //                 ->where('a.id', $id)
-        //                 ->first();
-
-        // dd($dataRM);
 
         $subtotal = 0;
         foreach ($dataRM as $key => $value) {
@@ -250,8 +287,34 @@ class InvoiceController extends Controller
         $subtotal = number_format($subtotal + $ppn, 0,'','');
         $text = $this->textNumber($subtotal);
 
-        $pdf = PDF::loadView('admin.invoices.export', compact('data', 'text', 'dataRM'));
+        $pdf = PDF::loadView('admin.invoices.export', compact('data', 'text', 'dataRM', 'dataRent'));
+        $inv = str_replace("/", "_", $data->invoice_no);
+        $output = $pdf->output();
+        file_put_contents('report/invoice/'. $inv .'.pdf', $output);
+
         return $pdf->stream('invoice-'.$data->invoice_no.'-'.time().'.pdf');
+    }
+
+    public function sendMail($id)
+    {
+        $data = DB::table('invoices as a')
+                    ->select('a.id', 'a.invoice_no', 'a.date','a.start_date', 'a.end_date', 'a.id_customer', 'b.name as customer_name', 'b.address', 'a.id_field', 'c.name as field_name')
+                    ->leftJoin('customers as b', 'a.id_customer', '=', 'b.id')
+                    ->leftJoin('fields as c', 'a.id_field', '=', 'c.id')
+                    ->where('a.id', $id)
+                    ->first();
+
+        Mail::send('admin.invoices.email', ['data' => $data], function ($message) use ($data)
+        {
+            $inv = str_replace("/", "_", $data->invoice_no);
+            $message->to('candrasetiadiwahyu@gmail.com');
+            $message->subject($data->invoice_no);
+            $message->attach('report/invoice/'. $inv .'.pdf', [
+                        'as' => $data->invoice_no.'.pdf',
+                        'mime' => 'application/pdf',
+                    ]);
+
+        });
     }
 
     public function textNumber($number)

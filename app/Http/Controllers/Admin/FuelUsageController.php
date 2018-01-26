@@ -40,7 +40,7 @@ class FuelUsageController extends Controller
 
             return view('admin.fuelUsages.index', compact('fuelUsages', 'fields', 'generators', 'fuelStocks', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 

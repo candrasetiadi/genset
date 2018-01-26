@@ -31,10 +31,11 @@
                                 </div>
                                 <div class="card-block">
 
-                                    <button type="button" class="btn btn-primary" data-action="add" data-toggle="modal" data-target="#primaryModal" data="">
-                                        <i class="fa fa-plus"></i> Add
-                                    </button>
-
+                                    @if (Auth::user()->id_role != '2')
+                                        <button type="button" class="btn btn-primary" data-action="add" data-toggle="modal" data-target="#primaryModal" data="">
+                                            <i class="fa fa-plus"></i> Add
+                                        </button>
+                                    @endif
                                     <table class="stripe hover mdl-data-table" id="settable" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
@@ -62,13 +63,33 @@
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->set_point }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ date('d-m-Y', strtotime($rent->date_in)) }} {{ $rent->time_in }}</td>
                                                     <td class="clickRow" data="{{ $rent->id }}">{{ $rent->date_out }}</td>
-                                                    <td class="clickRow" data="{{ $rent->id }}">{{ $rent->status }}</td>
                                                     <td>
-                                                        <!-- <a href="{{ route('rent.exportpdf', $rent->id) }}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a> -->
-                                                        @if ($rent->status == 1)
-                                                        <a href="" data-action="edit" data-id="{{ $rent->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+                                                        <!-- @if (Auth::user()->id_role != '2')
+                                                            <select id="updateStatus" name="updateStatus" class="form-control" placeholder="Please Select" required style="width: 100%;" data="{{ $rent->id }}">
 
-                                                        <a href="{{ route('rent.delete', $rent->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                                @foreach ($status as $key => $value)
+                                                                    @if ($key == $rent->status)
+                                                                        <option value="{{ $key }}" selected>{{ $value }}</option>  
+                                                                    @elseif ($key == 'active' || $key == 'inactive')
+                                                                        <option value="{{ $key }}" disabled>{{ $value }}</option>
+                                                                    @else
+                                                                        <option value="{{ $key }}">{{ $value }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        @else
+                                                            {{ $rent->status }}
+                                                        @endif -->
+                                                        {{ $rent->status }}
+                                                    </td>
+                                                    <td>
+                                                        @if (Auth::user()->id_role != '2')
+                                                            <!-- <a href="{{ route('rent.exportpdf', $rent->id) }}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a> -->
+                                                            @if ($rent->status == 'active')
+                                                            <a href="" data-action="edit" data-id="{{ $rent->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+
+                                                            <a href="{{ route('rent.delete', $rent->id) }}" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
+                                                            @endif
                                                         @endif
 
                                                     </td>
@@ -275,6 +296,28 @@
                         $("#id_container").append('<option value=' + val.id + '>' + val.name + '</option>')
                         $("#id_container").select2()
                     })
+                }
+            })
+        })
+
+        $(document).on('change', '#updateStatus', function(e){
+            e.preventDefault()
+
+            var _this = $(this).val(),
+                id = $(this).attr('data')
+
+            $.ajax({
+                url: "{{URL::to('admin/rent')}}/"+ _this + "/setStatus",
+                type: 'GET',
+                data: {
+                    _method: 'GET',
+                    status : _this,
+                    id:id,
+                    _token:     '{{ csrf_token() }}'
+                },
+                success: function(response){
+
+                    location.reload();
                 }
             })
         })

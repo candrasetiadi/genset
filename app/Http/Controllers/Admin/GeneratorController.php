@@ -27,7 +27,7 @@ class GeneratorController extends Controller
 
             return view('admin.generators.index', compact('generators', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 

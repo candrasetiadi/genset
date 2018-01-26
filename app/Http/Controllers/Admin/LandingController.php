@@ -30,7 +30,7 @@ class LandingController extends Controller
 
             return view('admin.landings.index', compact('landings', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 

@@ -77,16 +77,16 @@
 			<td>Aktif - masih di lapangan (berjalan)</td>
 			<td align="right">Rp</td>
 			<td align="right">{{ number_format($totalActive, 0,',','.') }}</td>
-			<td>0/6 Box</td>
-			<td>Tgl. s/d jam WIB</td>
+			<!-- <td>0/6 Box</td>
+			<td>Tgl. s/d jam WIB</td> -->
 		</tr>		
 		<tr>
 			<td>2</td>
 			<td>Aktif - belum dibuat invoice (out)</td>
 			<td align="right">Rp</td>
 			<td align="right">{{ number_format($totalInactive, 0,',','.') }}</td>
-			<td>0/6 Box</td>
-			<td>Tgl. s/d jam WIB</td>
+			<!-- <td>0/6 Box</td>
+			<td>Tgl. s/d jam WIB</td> -->
 		</tr>		
 		<tr>
 			<td colspan="2"><b>Total</td>
@@ -99,8 +99,8 @@
 			<td>Proses TTD &amp; Faktur Pajak</td>
 			<td align="right">Rp</td>
 			<td align="right">{{ number_format($totalTax, 0,',','.') }}</td>
-			<td>0/6 Box</td>
-			<td>Tgl. s/d jam WIB</td>
+			<!-- <td>0/6 Box</td>
+			<td>Tgl. s/d jam WIB</td> -->
 		</tr>	
 		<!-- <tr>
 			<td colspan="2"></td>
@@ -120,8 +120,8 @@
 			<td>Double Check Internal</td>
 			<td align="right">Rp</td>
 			<td align="right">{{ number_format($totalChecking, 0,',','.') }}</td>
-			<td>0/6 Box</td>
-			<td>Tgl. s/d jam WIB</td>
+			<!-- <td>0/6 Box</td>
+			<td>Tgl. s/d jam WIB</td> -->
 		</tr>		
 		<tr>
 			<td colspan="2"><b>Total</td>

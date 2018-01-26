@@ -60,6 +60,35 @@
 
         <!-- Modernizer Script for old Browsers -->
         <script src="/assets/landing/js/modernizr-2.6.2.min.js"></script>
+        <style type="text/css">
+            .btnLogin {
+                background: #3498db;
+                background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+                background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+                background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+                background-image: -o-linear-gradient(top, #3498db, #2980b9);
+                background-image: linear-gradient(to bottom, #3498db, #2980b9);
+                -webkit-border-radius: 28;
+                -moz-border-radius: 28;
+                border-radius: 28px;
+                font-family: sans-serif;
+                color: #ffffff;
+                font-size: 20px;
+                padding: 10px 20px 10px 20px;
+                text-decoration: none;
+                margin-top: 50px;
+            }
+
+            .btnLogin:hover {
+              background: #3cb0fd;
+              background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+              background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+              background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+              background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+              background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+              text-decoration: none;
+            }
+        </style>
 
     </head>
     
@@ -104,8 +133,15 @@
                         <!-- <li><a href="#testimonials">Testimonial</a></li>
                         <li><a href="#price">price</a></li> -->
                         <li><a href="#contact">Contact</a></li>
+                        
                     </ul>
+                    
                 </nav>
+
+                <div style="margin-top: 10px; margin-left: 1200px;">
+                    <a href="{{ route('login') }}" class="btnLogin">Login</a>
+                </div>
+
                 <!-- /main nav -->
                 
             </div>

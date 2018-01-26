@@ -29,8 +29,8 @@
                                 <div class="card-header">
                                     <i class="fa fa-align-justify"></i> {{ $title }}
                                 </div>
-                                <div class="card-block">
-                                    <form class="form" method="POST" action="{{ url('admin/weeklyReport/exportpdf') }}">
+                                <div class="card-block" style="height: 300px;">
+                                    <form class="form" method="POST" action="{{ url('admin/weeklyReport/exportpdf') }}" target="_blank">
                                         
                                         {{ csrf_field() }}
 

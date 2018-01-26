@@ -29,7 +29,7 @@ class ServiceController extends Controller
 
             return view('admin.landingServices.index', compact('services', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 

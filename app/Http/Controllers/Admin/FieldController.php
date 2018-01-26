@@ -27,7 +27,7 @@ class FieldController extends Controller
 
             return view('admin.fields.index', compact('fields', 'title'));
         } else {
-            redirect('/admin/home');
+            return redirect('/admin/home');
         }
     }
 
@@ -129,7 +129,6 @@ class FieldController extends Controller
         $field = Field::findOrFail($id);
 
         $this->validate($request, [
-            'field_no' => 'required',
             'name' => 'required',
             'location' => 'required'
         ]);
