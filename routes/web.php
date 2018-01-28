@@ -11,6 +11,9 @@
 |
 */
 Route::get('/', 'Client\LandingController@index')->name('landing');
+Route::get('/about', 'Client\LandingController@about')->name('about');
+Route::get('/service', 'Client\LandingController@service')->name('service');
+Route::get('/contact', 'Client\LandingController@contact')->name('contact');
 	// return view('welcome');
 
 Route::get('/admin', function () {
