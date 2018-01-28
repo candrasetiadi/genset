@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Rent;
+use PDF;
 
 class DoubleCheckController extends Controller
 {
@@ -127,5 +128,39 @@ class DoubleCheckController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function generatePdfDoubleCheck(Request $request, $id) {
+        
+        $rent = Rent::findOrFail($id);
+
+        $this->validate($request, [
+
+        ]);
+
+        $request->merge([
+            'status' => 'done'
+        ]);
+
+        $input = $request->all();
+
+        $rent->fill($input)->save();
+
+        $dataRent = DB::table('rents as a')
+                        ->select(DB::raw('b.container_no, b.name, b.size, a.rent_no, a.date_in, a.time_in, a.date_out, count(c.time_shift) as total_shift, a.set_point, a.delivery_type, d.name as ship_name, b.recooling_price, b.monitoring_price'))
+                        ->leftJoin('containers as b', 'a.id_container', '=', 'b.id')
+                        ->leftJoin('rent_details as c', 'a.id', '=', 'c.id_rent')
+                        ->leftJoin('ships as d', 'a.id_ship', '=', 'd.id')
+                        
+                        ->where('a.status', 'done')
+                        ->groupBy('a.id')
+                        ->get();
+
+        $pdf = PDF::loadView('admin.rents.export-doubleCheck', compact('text', 'dataRent'));
+        $output = $pdf->output();
+        $rents_no = str_replace("/", "_", $dataRent[0]->rent_no);
+        // file_put_contents('report/rent/double-check/'. $rents_no .'.pdf', $output);
+
+        return $pdf->stream('double-check-'.$dataRent[0]->rent_no.'-'.time().'.pdf');
     }
 }

@@ -48,13 +48,16 @@ class HomeController extends Controller
         $today = date('Y-m-d');
         $oneWeekAgo = date ( 'Y-m-d', strtotime ( '-7 day' . $today ) );
 
-        $solar = DB::table('fuel_usages')
+        $solar = DB::table('fuel_stocks')
                         ->where('date', '>=', date('Y-m-d', strtotime($oneWeekAgo)))
                         ->get();
 
         $userLogin = DB::table('users')
+                        ->limit(3)
                         ->get();
-
-        return view('home', compact('plugin', 'plugout', 'solar', 'userLogin'));
+        
+        $count_plugin = count($plugin);
+        $count_plugout = count($plugout);
+        return view('home2', compact('plugin', 'plugout', 'solar', 'userLogin', 'count_plugin', 'count_plugout'));
     }
 }

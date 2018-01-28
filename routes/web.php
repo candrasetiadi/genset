@@ -112,6 +112,9 @@ Route::prefix('admin')->group(function () {
 	Route::get('spka/{id}/exportpdf', ['as' => 'spka.exportpdf', 'uses' => 'Admin\SpkaController@generatePdf']);
 
 	Route::post('rent/exportpdf', ['as' => 'rent.exportpdf', 'uses' => 'Admin\RentController@generatePdf']);
+
+	Route::get('rent/doubleCheck/{id}/pdf', ['as' => 'rent.exportpdfDoubleCheck', 'uses' => 'Admin\DoubleCheckController@generatePdfDoubleCheck']);
+
 	Route::post('weeklyReport/exportpdf', ['as' => 'rent.weeklyPdf', 'uses' => 'Admin\RentController@weeklyGeneratePdf']);
 
 	//send email

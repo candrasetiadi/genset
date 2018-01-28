@@ -78,7 +78,8 @@
                                                     </td>
                                                     <td>
                                                         @if (Auth::user()->id_role != '2')
-                                                            <input type="checkbox" name="doubleCheck" id="doubleCheck" data="{{ $rent->id }}">
+                                                           
+                                                            <a href="{{ route('rent.exportpdfDoubleCheck', $rent->id)}}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a>
                                                         @endif
 
                                                     </td>

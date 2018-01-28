@@ -269,7 +269,7 @@ class InvoiceController extends Controller
                         ->get();        
 
         $dataRent = DB::table('rents as a')
-                        ->select(DB::raw('b.container_no, b.name, b.size, a.date_in, a.time_in, a.date_out, count(c.time_shift) as total_shift, a.set_point, a.delivery_type, d.name as ship_name, b.recooling_price, b.monitoring_price'))
+                        ->select(DB::raw('b.container_no, b.name, b.size, a.rent_no, a.date_in, a.time_in, a.date_out, count(c.time_shift) as total_shift, a.set_point, a.delivery_type, d.name as ship_name, b.recooling_price, b.monitoring_price'))
                         ->leftJoin('containers as b', 'a.id_container', '=', 'b.id')
                         ->leftJoin('rent_details as c', 'a.id', '=', 'c.id_rent')
                         ->leftJoin('ships as d', 'a.id_ship', '=', 'd.id')

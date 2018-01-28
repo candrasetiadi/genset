@@ -418,4 +418,6 @@ class RentController extends Controller
 
         });
     }
+
+    
 }
