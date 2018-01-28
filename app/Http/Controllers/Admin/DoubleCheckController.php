@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Rent;
 use PDF;
 
+use App\Mail\InvoiceMail;
+use Illuminate\Support\Facades\Mail;
+
 class DoubleCheckController extends Controller
 {
     /**
@@ -159,8 +162,42 @@ class DoubleCheckController extends Controller
         $pdf = PDF::loadView('admin.rents.export-doubleCheck', compact('text', 'dataRent'));
         $output = $pdf->output();
         $rents_no = str_replace("/", "_", $dataRent[0]->rent_no);
-        // file_put_contents('report/rent/double-check/'. $rents_no .'.pdf', $output);
+        file_put_contents('report/rent/double-check/'. $rents_no .'.pdf', $output);
+
+        Mail::send('admin.rents.email-doubleCheck', ['data' => $dataRent], function ($message) use ($dataRent)
+        {
+            $rents_no = str_replace("/", "_", $dataRent[0]->rent_no);
+            $message->to('candrasetiadiwahyu@gmail.com');
+            $message->subject($dataRent[0]->rent_no);
+            $message->attach('report/rent/double-check/'. $rents_no .'.pdf', [
+                        'as' => $dataRent[0]->rent_no.'.pdf',
+                        'mime' => 'application/pdf',
+                    ]);
+
+        });
 
         return $pdf->stream('double-check-'.$dataRent[0]->rent_no.'-'.time().'.pdf');
+    }
+
+    public function sendMail($id)
+    {
+        $data = DB::table('invoices as a')
+                    ->select('a.id', 'a.invoice_no', 'a.date','a.start_date', 'a.end_date', 'a.id_customer', 'b.name as customer_name', 'b.address', 'a.id_field', 'c.name as field_name')
+                    ->leftJoin('customers as b', 'a.id_customer', '=', 'b.id')
+                    ->leftJoin('fields as c', 'a.id_field', '=', 'c.id')
+                    ->where('a.id', $id)
+                    ->first();
+
+        Mail::send('admin.invoices.email', ['data' => $data], function ($message) use ($data)
+        {
+            $inv = str_replace("/", "_", $data->invoice_no);
+            $message->to('candrasetiadiwahyu@gmail.com');
+            $message->subject($data->invoice_no);
+            $message->attach('report/invoice/'. $inv .'.pdf', [
+                        'as' => $data->invoice_no.'.pdf',
+                        'mime' => 'application/pdf',
+                    ]);
+
+        });
     }
 }
