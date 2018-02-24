@@ -192,12 +192,15 @@
 
             } else {
 
+                $("#method").val("POST")
                 $("#generator_no").val("")
                 $("#name").val("")
                 $("#brand").val("")
                 $("#type").val("")
                 $("#diesel_fuel_capacity").val("")
                 $("#id").val("")
+
+                $("form").attr("action", "generator")
             }
         })
     });

@@ -98,8 +98,7 @@
                             <div class="controls">
                                 <div class="input-group">
                                     <input id="customer_no" class="form-control" type="text" name="customer_no" value="" required>
-                                    <input type="hidden" name="id" id="id" value="">
-                                    <input type="hidden" name="_method" id="method" value="POST">
+                                    
                                 </div>
                             </div>
                         </div> -->
@@ -108,6 +107,9 @@
                             <div class="controls">
                                 <div class="input-group">
                                     <input id="email" class="form-control" type="email" name="email" required>
+
+                                    <input type="hidden" name="id" id="id" value="">
+                                    <input type="hidden" name="_method" id="method" value="POST">
                                 </div>
                             </div>                         
                         </div>                            
@@ -220,6 +222,9 @@
                 $("#phone_2").val("")
                 $("#pic").val("")
                 $("#id").val("")
+
+                $("#method").val("POST")
+                $("form").attr("action", "customer")
             }
         })
 

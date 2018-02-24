@@ -177,6 +177,9 @@
                 $("#name").val("")
                 $("#location").val("")
                 $("#id").val("")
+
+                $("#method").val("POST")
+                $("form").attr("action", "field")
             }
         })
     });

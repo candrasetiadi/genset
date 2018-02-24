@@ -205,7 +205,9 @@
                 })
 
             } else {
+                $("#method").val("POST")
 
+                $("form").attr("action", "configuration")
                 
             }
         })

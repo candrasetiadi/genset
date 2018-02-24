@@ -20,16 +20,16 @@
                         <a class="nav-link" href="{{ url('admin/customer') }}"><i class="icon-people"></i> Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('admin/container') }}"><i class="fa fa-truck"></i> Container</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('admin/generator') }}" target="_top"><i class="fa fa-flash"></i> Generator</a>
+                        <a class="nav-link" href="{{ url('admin/field') }}"><i class="fa fa-map-o"></i> Lapangan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('admin/ship') }}"><i class="fa fa-ship"></i> Kapal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('admin/field') }}"><i class="fa fa-map-o"></i> Lapangan</a>
+                        <a class="nav-link" href="{{ url('admin/container') }}"><i class="fa fa-truck"></i> Container</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/generator') }}" target="_top"><i class="fa fa-flash"></i> Generator</a>
                     </li>
                 </ul>
             </li>
@@ -134,16 +134,16 @@
                         <a class="nav-link" href="{{ url('admin/customer') }}"><i class="icon-people"></i> Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('admin/container') }}"><i class="fa fa-truck"></i> Container</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('admin/generator') }}" target="_top"><i class="fa fa-flash"></i> Generator</a>
+                        <a class="nav-link" href="{{ url('admin/field') }}"><i class="fa fa-map-o"></i> Lapangan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('admin/ship') }}"><i class="fa fa-ship"></i> Kapal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('admin/field') }}"><i class="fa fa-map-o"></i> Lapangan</a>
+                        <a class="nav-link" href="{{ url('admin/container') }}"><i class="fa fa-truck"></i> Container</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/generator') }}" target="_top"><i class="fa fa-flash"></i> Generator</a>
                     </li>
                 </ul>
             </li>

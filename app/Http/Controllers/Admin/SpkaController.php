@@ -30,8 +30,10 @@ class SpkaController extends Controller
                             ->get();
 
             $invoices = DB::table('invoices as a')
+                            ->select('a.*')
                             ->leftJoin('spkas as b', 'a.id', '=', 'b.id_invoice')
                             ->where('a.id', '!=', 'b.id_invoice')
+                            ->where('a.status', 'paid')
                             ->get();
             // dd($invoices);
             $title = 'SPKA';

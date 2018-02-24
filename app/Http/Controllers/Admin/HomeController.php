@@ -52,12 +52,16 @@ class HomeController extends Controller
                         ->where('date', '>=', date('Y-m-d', strtotime($oneWeekAgo)))
                         ->get();
 
+        $stockSolars = DB::table('fuel_stocks')
+                        ->limit(2)
+                        ->orderBy('id', 'desc')
+                        ->get();
+
         $userLogin = DB::table('users')
-                        ->limit(3)
                         ->get();
         
         $count_plugin = count($plugin);
         $count_plugout = count($plugout);
-        return view('home2', compact('plugin', 'plugout', 'solar', 'userLogin', 'count_plugin', 'count_plugout'));
+        return view('home2', compact('plugin', 'plugout', 'solar', 'userLogin', 'count_plugin', 'count_plugout', 'stockSolars'));
     }
 }

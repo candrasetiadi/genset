@@ -270,6 +270,42 @@ class RentController extends Controller
         return redirect()->back();
     }
 
+    public function editDetail(Request $request, $id)
+    {
+        $data = DB::table('rent_details')
+                        ->where('id', $id)
+                        ->get();
+        return $data;
+    }
+
+    public function updateTempDetail(Request $request, $id)
+    {
+        $rentDetail = RentDetail::findOrFail($id);
+
+        $this->validate($request, [
+            // 'date_out' => 'required',
+            // 'time_out' => 'required',
+            // 'temperature_out' => 'required'
+        ]);
+
+        $input = $request->all();
+
+        $rentDetail->fill($input)->save();
+
+        $request->session()->flash('flash_message', 'Temperature Record successfully updated!');
+        
+        return redirect()->back();
+    }
+
+    public function destroyTempDetail($id)
+    {
+        $RentDetail = RentDetail::find($id);
+        $RentDetail->delete();
+
+        // redirect
+        return redirect()->back();
+    }
+
     public function refeerContainer()
     {
         $data = DB::table('rents as a')

@@ -37,9 +37,9 @@
 	</style>
 </head>
 <body>
-<p><center>{{ $dataRent[0]->rent_no }}</center></p>
-	<p><center><b>TENTANG</b></center></p>
-	<p><center><b>PEMAKAIAN ALAT GENSET DAN PENUNJANGNYA UNTUK KEGIATAN REFEER</b></center></p>
+<!-- <p><center>{{ $dataRent[0]->rent_no }}</center></p> -->
+	<p align="center"><center><b>DOUBLE CHECK</b></center></p>
+	<!-- <p><center><b>PEMAKAIAN ALAT GENSET DAN PENUNJANGNYA UNTUK KEGIATAN REFEER</b></center></p>
 	<p><center><b>CONTAINER DI LAPANGAN 305 (PT.TSJ) TERMINAL III PELABUHAN TANJUNG PRIOK</b></center></p>
 
 	<p>Pada hari ini,</p>
@@ -85,7 +85,7 @@
 	</table>
 	<p>Dalam hal ini bertindak untuk dan atas nama PT. Pelabuhan Tanjung Priok, untuk selanjutnya disebut <b>PIHAK KEDUA</b></p>
 
-	<p>Bahwa <b>PIHAK KEDUA</b> telah menerima dan menggunakan alat genset serta penunjang alat milik <b>PIHAK PERTAMA</b>, dimana penggunaan genset dan penunjang tersebut untuk pelayanan refeer container dengan rincian sebagai berikut:</p>
+	<p>Bahwa <b>PIHAK KEDUA</b> telah menerima dan menggunakan alat genset serta penunjang alat milik <b>PIHAK PERTAMA</b>, dimana penggunaan genset dan penunjang tersebut untuk pelayanan refeer container dengan rincian sebagai berikut:</p> -->
 
 	<table width="100%" class="ba">
 		<thead>
@@ -145,7 +145,7 @@
 
 	</table>
 
-	<p>Pengoperasian alat genset dan monitoring refeer container di lokasi dimulai hari . (data pengoperasian alat dan monitoring terlampir)</p>
+	<!-- <p>Pengoperasian alat genset dan monitoring refeer container di lokasi dimulai hari . (data pengoperasian alat dan monitoring terlampir)</p>
 	<p>Demikian berita acara ini dibuat ditandatangani di Jakarta pada hari dan tanggal tersebut diatas. </p>
 
 	<table width="100%">
@@ -159,6 +159,6 @@
 			<td height="200px"  align="center"><b>&nbsp;</b></td>
 			<td height="200px"  align="center"><b><u>WAHYU HARDIYANTO</u></b></td>
 		</tr>
-	</table>
+	</table> -->
 </body>
 </html>

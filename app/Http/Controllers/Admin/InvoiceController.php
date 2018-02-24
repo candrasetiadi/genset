@@ -86,14 +86,12 @@ class InvoiceController extends Controller
 
         if ( $lastNumber != null ) {
 
-            $month = substr($lastNumber->invoice_no, 10,2);
-            $year = substr($lastNumber->invoice_no, 13,4);
-
+            $month = substr($lastNumber->invoice_no, 9,2);
+            $year = substr($lastNumber->invoice_no, 12,4);
+            
             if ( date('Y') != $year ) {
                 $numb = '0000';
             } elseif ( date('m') != $month ) {
-                $numb = '0000';
-            } elseif ( date('d') != $day ) {
                 $numb = '0000';
             } else {
                 $numb = substr($lastNumber->invoice_no, 0,4);

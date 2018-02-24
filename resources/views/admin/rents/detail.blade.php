@@ -64,7 +64,7 @@
                         </div>
                         <div class="card">
                         	<div class="card-block">
-                        		@if ( $data->status == 1 )
+                        		@if ( $data->status == 'active' )
 		                        	<form class="form-horizontal" method="POST" action="{{ route('rent.updateDetail', $data->id) }}">
 		                        		{{method_field("PATCH")}}
 		                            	{{ csrf_field() }}
@@ -89,7 +89,7 @@
 		                                </div>
 		                                <div class="form-group row">
 		                                	<div class="col-md-6">
-			                            		<label class="form-control-label" for="temperature_out">Set Point</label>
+			                            		<label class="form-control-label" for="temperature_out">Suhu</label>
 			                                    <div class="controls">
 			                                        <div class="input-group">
 			                                            <input id="temperature_out" class="form-control" type="text" name="temperature_out" value="{{ $data->temperature_out }}">
@@ -126,7 +126,7 @@
                         <div class="card">
                             <div class="card-block">
                             	<h4>Temperature Record</h4>
-                            	@if ( $data->status == 1 )
+                            	@if ( $data->status == 'active' )
 	                            	<button type="button" class="btn btn-primary" data-action="add" data-toggle="modal" data-target="#primaryModal" data="">
 	                            	    <i class="fa fa-plus"></i> Add
 	                            	</button>
@@ -136,7 +136,7 @@
                                         <tr>
                                             <th width="35%">Tanggal</th>
                                             <th width="35%">Jam Shift</th>
-                                            <th width="25%">Set Point</th>
+                                            <th width="25%">Suhu</th>
                                             <th width="25%">Dibuat Oleh</th>
                                             <th width="5%">Action</th>
                                         </tr>
@@ -152,8 +152,9 @@
                                                 <td>{{ $detail->temperature }} &deg;C</td>
                                                 <td>{{ $detail->created_by }}</td>
                                                 <td>
-                                                	@if ( $data->status == 1 )
+                                                	@if ( $data->status == 'active' )
                                                     	<a href="" data-action="edit" data-id="{{ $detail->id }}" data-toggle="modal" data-target="#primaryModal" title="Edit" class="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+                                                    	<a href="" data="{{ $detail->id }}" id="deleteRow" data-base="rentDetailTemp" title="Delete"><span class="badge badge-danger"><i class="fa fa-times"></i></span></a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -198,7 +199,7 @@
 	                    <div class="form-group">
 	                        <label class="form-control-label" for="time_shift">Jam Shift</label>
 	                        <div class="controls">
-	                            <select id="time_shift" name="time_shift" class="form-control" placeholder="Please Select">
+	                            <select id="time_shift" name="time_shift" class="form-control" placeholder="Please Select" style="width: 100%;">
 	                                <option value="0">&nbsp;</option>
 	                                @foreach($timeShift as $key => $val)
 	                                    <option value="{{ $key }}">{{ $val }}</option>
@@ -207,7 +208,7 @@
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
-	                        <label class="form-control-label" for="temperature">Set Point</label>
+	                        <label class="form-control-label" for="temperature">Suhu</label>
 	                        <div class="controls">
 	                            <div class="input-group">
 	                                <input id="temperature" class="form-control"  type="text" name="temperature">
@@ -239,6 +240,45 @@
                     className: 'mdl-data-table__cell--non-numeric'
                 }
             ]
+        })
+
+        $('#primaryModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+                recipient = button.data('action') 
+                _this = button.data('id')
+
+            if ( recipient == 'edit' ) {
+                $.ajax({
+                    url: "{{URL::to('admin/rent')}}/"+ _this + "/editDetail",
+                    type: 'GET',
+                    data: {
+                        _method: 'GET',
+                        id : _this,
+                        _token:     '{{ csrf_token() }}'
+                    },
+                    success: function(response){
+
+                        var modal = $(this)
+                        $("#date").val(response[0].date)
+                        $("#time_shift").val(response[0].time_shift).trigger('change')
+                        $("#temperature").val(response[0].temperature)
+                        $("#id").val(response[0].id)
+                        $("#method").val("PATCH")
+
+                        $("form").attr("action", "detail/"+ _this + "/updateTemp")
+                    }
+                })
+
+            } else {
+
+                $("#date").val("")
+                $("#time_shift").val("")
+                $("#temperature").val("")
+                $("#id").val("")
+
+                $("#method").val("POST")
+                $("form").attr("action", "detail")
+            }
         })
     })
 </script>

@@ -225,6 +225,7 @@
 
             } else {
 
+                $("#method").val("POST")
                 $("#container_no").val("")
                 $("#name").val("")
                 $("#size").val("")
@@ -233,6 +234,7 @@
                 $("#recooling_price").val("")
                 $("#monitoring_price").val("")
                 $("#id").val("")
+                $("form").attr("action", "container")
             }
         })
     });

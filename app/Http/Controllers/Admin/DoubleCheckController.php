@@ -133,29 +133,15 @@ class DoubleCheckController extends Controller
         //
     }
 
-    public function generatePdfDoubleCheck(Request $request, $id) {
-        
-        $rent = Rent::findOrFail($id);
-
-        $this->validate($request, [
-
-        ]);
-
-        $request->merge([
-            'status' => 'done'
-        ]);
-
-        $input = $request->all();
-
-        $rent->fill($input)->save();
+    public function generatePdfDoubleCheck(Request $request) {
 
         $dataRent = DB::table('rents as a')
-                        ->select(DB::raw('b.container_no, b.name, b.size, a.rent_no, a.date_in, a.time_in, a.date_out, count(c.time_shift) as total_shift, a.set_point, a.delivery_type, d.name as ship_name, b.recooling_price, b.monitoring_price'))
+                        ->select(DB::raw('b.container_no, b.name, b.size, a.id, a.rent_no, a.date_in, a.time_in, a.date_out, count(c.time_shift) as total_shift, a.set_point, a.delivery_type, d.name as ship_name, b.recooling_price, b.monitoring_price'))
                         ->leftJoin('containers as b', 'a.id_container', '=', 'b.id')
                         ->leftJoin('rent_details as c', 'a.id', '=', 'c.id_rent')
                         ->leftJoin('ships as d', 'a.id_ship', '=', 'd.id')
                         
-                        ->where('a.status', 'done')
+                        ->where('a.status', 'checking')
                         ->groupBy('a.id')
                         ->get();
 
@@ -164,17 +150,29 @@ class DoubleCheckController extends Controller
         $rents_no = str_replace("/", "_", $dataRent[0]->rent_no);
         file_put_contents('report/rent/double-check/'. $rents_no .'.pdf', $output);
 
-        Mail::send('admin.rents.email-doubleCheck', ['data' => $dataRent], function ($message) use ($dataRent)
-        {
-            $rents_no = str_replace("/", "_", $dataRent[0]->rent_no);
-            $message->to('candrasetiadiwahyu@gmail.com');
-            $message->subject($dataRent[0]->rent_no);
-            $message->attach('report/rent/double-check/'. $rents_no .'.pdf', [
-                        'as' => $dataRent[0]->rent_no.'.pdf',
-                        'mime' => 'application/pdf',
-                    ]);
+        foreach ($dataRent as $value) {
+            $rent = Rent::findOrFail($value->id);
 
-        });
+            $request->merge([
+                'status' => 'done'
+            ]);
+
+            $input = $request->all();
+
+            $rent->fill($input)->save();
+        }
+
+        // Mail::send('admin.rents.email-doubleCheck', ['data' => $dataRent], function ($message) use ($dataRent)
+        // {
+        //     $rents_no = str_replace("/", "_", $dataRent[0]->rent_no);
+        //     $message->to('candrasetiadiwahyu@gmail.com');
+        //     $message->subject($dataRent[0]->rent_no);
+        //     $message->attach('report/rent/double-check/'. $rents_no .'.pdf', [
+        //                 'as' => $dataRent[0]->rent_no.'.pdf',
+        //                 'mime' => 'application/pdf',
+        //             ]);
+
+        // });
 
         return $pdf->stream('double-check-'.$dataRent[0]->rent_no.'-'.time().'.pdf');
     }
@@ -188,10 +186,12 @@ class DoubleCheckController extends Controller
                     ->where('a.id', $id)
                     ->first();
 
-        Mail::send('admin.invoices.email', ['data' => $data], function ($message) use ($data)
+        $customers = DB::table('customers')->first();
+
+        Mail::send('admin.invoices.email', ['data' => $data, 'customers' => $customers], function ($message) use ($data, $customers)
         {
             $inv = str_replace("/", "_", $data->invoice_no);
-            $message->to('candrasetiadiwahyu@gmail.com');
+            $message->to($customers->email);
             $message->subject($data->invoice_no);
             $message->attach('report/invoice/'. $inv .'.pdf', [
                         'as' => $data->invoice_no.'.pdf',

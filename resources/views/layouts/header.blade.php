@@ -2,7 +2,7 @@
 
 <header class="app-header navbar">
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">☰</button>
-    <a class="navbar-brand" href="#">e-genset</a>
+    <a class="navbar-brand" href="#"></a>
     <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item">
             <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
@@ -30,7 +30,7 @@
         </li> -->
         <li class="nav-item dropdown nav-profile">
             <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <img src="/assets/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <!-- <img src="/assets/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com"> -->
                 <span class="d-md-down-none">{{ Auth::user()->name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">

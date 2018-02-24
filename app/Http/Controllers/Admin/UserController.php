@@ -44,10 +44,12 @@ class UserController extends Controller
 
     public function profile($id)
     {
-        $users = DB::table('users')
-                        ->where('id', $id)
+        $users = DB::table('users as a')
+                        ->select('a.*', 'b.name as role')
+                        ->leftJoin('roles as b', 'a.id_role', '=', 'b.id')
+                        ->where('a.id', $id)
                         ->first();
-
+        
         return view('users.profile', compact('users'));
     }
 

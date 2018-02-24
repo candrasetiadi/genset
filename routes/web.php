@@ -67,6 +67,9 @@ Route::prefix('admin')->group(function () {
 	Route::get('rent/{id}/doubleCheck', ['as' => 'rent.doubleCheck', 'uses' => 'Admin\DoubleCheckController@update']);
 	Route::get('rent/{id}/delete', ['as' => 'rent.delete', 'uses' => 'Admin\RentController@destroy']);
 	Route::post('rent/detail', ['as' => 'rent.storeDetail', 'uses' => 'Admin\RentController@storeDetail']);
+	Route::get('rent/{id}/editDetail', ['as' => 'rent.editDetail', 'uses' => 'Admin\RentController@editDetail']);
+	Route::patch('rent/detail/{id}/updateTemp', ['as' => 'rent.updateTempDetail', 'uses' => 'Admin\RentController@updateTempDetail']);
+	Route::get('rent/rentDetailTemp/{id}/delete', ['as' => 'rentDetailTemp.delete', 'uses' => 'Admin\RentController@destroyTempDetail']);
 	Route::patch('rent/detail/{id}/update', ['as' => 'rent.updateDetail', 'uses' => 'Admin\RentController@updateDetail']);
 
 	Route::get('refeerContainer/report', ['as' => 'rent.refeerContainer', 'uses' => 'Admin\RentController@refeerContainer']);
@@ -113,7 +116,7 @@ Route::prefix('admin')->group(function () {
 
 	Route::post('rent/exportpdf', ['as' => 'rent.exportpdf', 'uses' => 'Admin\RentController@generatePdf']);
 
-	Route::get('rent/doubleCheck/{id}/pdf', ['as' => 'rent.exportpdfDoubleCheck', 'uses' => 'Admin\DoubleCheckController@generatePdfDoubleCheck']);
+	Route::get('rent/doubleCheck/pdf', ['as' => 'rent.exportpdfDoubleCheck', 'uses' => 'Admin\DoubleCheckController@generatePdfDoubleCheck']);
 
 	Route::post('weeklyReport/exportpdf', ['as' => 'rent.weeklyPdf', 'uses' => 'Admin\RentController@weeklyGeneratePdf']);
 

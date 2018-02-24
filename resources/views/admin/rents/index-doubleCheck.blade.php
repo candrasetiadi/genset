@@ -30,6 +30,13 @@
                                     <i class="fa fa-align-justify"></i> {{ $title }}
                                 </div>
                                 <div class="card-block">
+                                    @if (Auth::user()->id_role != '2')
+                                        @if (count($rents) > 0)
+                                            <a href="{{ route('rent.exportpdfDoubleCheck')}}" title="Print" target="_blank">
+                                                <button type="submit" class="btn btn-success printReport" ><i class="fa fa-print"></i> Cetak</button>
+                                            </a>
+                                        @endif
+                                    @endif
                                     <table class="stripe hover mdl-data-table" id="settable" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
@@ -41,7 +48,7 @@
                                                 <th width="15%">Masuk</th>
                                                 <th width="15%">Keluar</th>
                                                 <th width="10%">Status</th>
-                                                <th width="5%">Action</th>
+                                                <!-- <th width="5%">Action</th> -->
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -76,13 +83,10 @@
                                                         @endif -->
                                                         {{ $rent->status }}
                                                     </td>
-                                                    <td>
-                                                        @if (Auth::user()->id_role != '2')
-                                                           
-                                                            <a href="{{ route('rent.exportpdfDoubleCheck', $rent->id)}}" title="Print" target="_blank"><span class="badge badge-success"><i class="fa fa-print"></i></span></a>
-                                                        @endif
+                                                    <!-- <td>
+                                                        
 
-                                                    </td>
+                                                    </td> -->
                                                 </tr>
                                             @endforeach
                                         </tbody>

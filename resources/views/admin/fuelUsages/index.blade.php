@@ -223,6 +223,9 @@
                 $("#field_operator").val("")
                 $("#unit_operator").val("")
                 $("#id").val("")
+
+                $("#method").val("POST")
+                $("form").attr("action", "fuelUsage")
             }
         })
     });

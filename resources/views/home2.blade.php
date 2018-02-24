@@ -80,7 +80,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        @if ($count_plugin > 0)
+                        @if ($count_plugin > 1)
                             <div class="col-12">
                                 <h2 class="m-b-0"><i class="mdi mdi-poll-box text-success"></i></h2>
                                 <h3>{{ $plugin[1]->total_cont }} Container </h3>
@@ -142,7 +142,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        @if ($count_plugout > 0)
+                        @if ($count_plugout > 1)
                             <div class="col-12">
                                 <h2 class="m-b-0"><i class="mdi mdi-buffer text-danger"></i></h2>
                                 <h3 class="">{{ $plugout[1]->total_cont }} Container </h3>
@@ -209,15 +209,17 @@
                           <div class="card-body collapse show">
                           <div id="morris-donut-chart" class="ecomm-donute" style="height: 317px;"></div>
                                 <ul class="list-inline text-center">
+                                    <!-- @foreach ($userLogin as $val)
                                     <li>
-                                        <h6 class="text-muted"><i class="fa fa-circle text-danger"></i> {{ $userLogin[0]->name }}</h6>
+                                        <h6 class="text-muted"><i class="fa fa-circle" style="color: '#26c6da';"></i> {{ $val->name }}</h6>
                                     </li>
-                                    <li >
+                                    @endforeach -->
+                                    <!-- <li >
                                         <h6 class="text-muted"><i class="fa fa-circle text-info"></i> {{ $userLogin[1]->name }}</h6>
                                     </li>
                                     <li>
                                         <h6 class="text-muted"> <i class="fa fa-circle text-success"></i> {{ $userLogin[2]->name }}</h6>
-                                    </li>
+                                    </li> -->
                                 </ul>
 
                           </div>
@@ -246,9 +248,10 @@
 <script src="/assets/dashboard/assets/plugins/morrisjs/morris.min.js"></script>
 <script>
 $(function() {
-
+    console.log(randStr())
     var solars = [],
-        solar = <?php echo $solar; ?>
+        solar = <?php echo $solar; ?>,
+        stockSolars = <?php echo $stockSolars; ?>
 
     if (solar != undefined) {
         solars = <?php echo $solar; ?> 
@@ -257,25 +260,32 @@ $(function() {
     var labelData = [],
         objects = {}
 
-
     $.each( solars, function( idx, val ) {
         labelData.push(
             {
-                'tanggal':val.date,
-                'keluar': val.solar_out,
-                'masuk': val.solar_in,
-                'stock': val.last_stock
+                period: getDayDate(val.date),
+                keluar: val.solar_out,
+                masuk: val.solar_in,
+                stock: val.last_stock
             }
         )
     })
 
+    console.log(newDate(stockSolars[0].date))
+
     if (labelData.length < 1) {
         labelData.push(
             {
-                'tanggal':today(),
-                'keluar': 0,
-                'masuk': 0,
-                'stock': 0
+                period:getDayDate(stockSolars[0].date),
+                keluar: 0,
+                masuk: 0,
+                stock: stockSolars[0].last_stock
+            },
+            {
+                period:getDayDate(stockSolars[1].date),
+                keluar: 0,
+                masuk: 0,
+                stock: stockSolars[1].last_stock
             }
         )
     }
@@ -324,9 +334,25 @@ $(function() {
         //         Buangan: 200
         //     }
         // ],
-        xkey: 'tanggal',
+        xkey: 'period',
         ykeys: ['keluar', 'masuk', 'stock'],
         labels: ['keluar', 'masuk', 'stock'],
+        xLabels: 'day',
+        xLabelAngle: 45,
+          xLabelFormat: function (d) {
+            var weekdays = new Array(7);
+            weekdays[0] = "SUN";
+            weekdays[1] = "MON";
+            weekdays[2] = "TUE";
+            weekdays[3] = "WED";
+            weekdays[4] = "THU";
+            weekdays[5] = "FRI";
+            weekdays[6] = "SAT";
+
+            return ("0" + (d.getDate())).slice(-2) + '-' + 
+                   ("0" + (d.getMonth() + 1)).slice(-2) + '-' +  
+                   ((d.getFullYear()));
+          },
         pointSize: 1,
         fillOpacity: 0,
         pointStrokeColors: ['#1976d2', '#26c6da', '#ffb22b'],
@@ -339,30 +365,49 @@ $(function() {
 
     });
 
-    var users = <?php echo $userLogin; ?>
+    var users = <?php echo $userLogin; ?>,
+        dataDonut = [] ,
+        colorDonut = ['#26c6da', '#1976d2', '#ef5350']
+
+    $.each( users, function( idx, val ) {
+        dataDonut.push(
+            {
+                label: val.name,
+                value: val.login_count
+            }
+        )
+
+        if (idx > 2) {
+            colorDonut.push('#' + randStr())
+        }
+    })
+
+    console.log(dataDonut)
 
     Morris.Donut({
         element: 'morris-donut-chart',
-        data: [{
-            label: users[0].name,
-            value: users[0].login_count,
+        data: dataDonut,
+        // data: [{
+        //     label: users[0].name,
+        //     value: users[0].login_count,
 
-        }, {
-            label: users[1].name,
-            value: users[1].login_count,
-        }, {
-            label: users[2].name,
-            value: users[2].login_count
-        }],
+        // }, {
+        //     label: users[1].name,
+        //     value: users[1].login_count,
+        // }, {
+        //     label: users[2].name,
+        //     value: users[2].login_count
+        // }],
         resize: true,
-        colors:['#26c6da', '#1976d2', '#ef5350']
+        colors:colorDonut
+        // colors:['#26c6da', '#1976d2', '#ef5350']
     });
 
 
 });
 
-function today() {
-    var today = new Date();
+function getDayDate(dates) {
+    var today = new Date(dates);
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
@@ -379,4 +424,19 @@ function today() {
 
     return today
 }
+
+function randStr() {
+  var text = "";
+  var possible = "abcdef0123456789";
+
+  for (var i = 0; i < 6; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
+function newDate(x) { 
+    return new Date(x).toString(); 
+}
+
 </script>

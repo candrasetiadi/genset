@@ -174,6 +174,9 @@
                 $("#name").val("")
                 $("#owner").val("")
                 $("#id").val("")
+
+                $("#method").val("POST")
+                $("form").attr("action", "ship")
             }
         })
     });

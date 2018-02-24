@@ -35,7 +35,7 @@
                                                 Posisi
                                             </div>
                                             <div class="col-sm-3">
-                                                
+                                                {{ ucwords($users->role) }}
                                             </div>
                                         </div>
                                         <div class="row">
@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="row">
-                                            <div class="col-sm-3">tes</div>
+                                            <!-- <div class="col-sm-3">tes</div> -->
                                         </div>
                                     </div>
                                 </div>

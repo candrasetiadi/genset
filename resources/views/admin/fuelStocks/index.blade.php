@@ -169,6 +169,9 @@
                 $("#date").val("")
                 $("#solar_in").val("")
                 $("#id").val("")
+
+                $("#method").val("POST")
+                $("form").attr("action", "fuelStock")
             }
         })
     });

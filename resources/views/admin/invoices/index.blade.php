@@ -237,6 +237,9 @@
                 $("#start_date").val("")
                 $("#end_date").val("")
                 $("#id").val("")
+
+                $("#method").val("POST")
+                $("form").attr("action", "invoice")
             }
         })
 

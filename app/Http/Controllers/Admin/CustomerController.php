@@ -135,7 +135,6 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
 
         $this->validate($request, [
-            'customer_no' => 'required',
             'name' => 'required',
             'email' => 'required',
             'address' => 'required',

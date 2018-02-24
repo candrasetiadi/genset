@@ -271,6 +271,10 @@
                 $("#date_in").val("")
                 $("#set_point").val("")
                 $("#id").val("")
+
+                $("#method").val("POST")
+
+                $("form").attr("action", "rent")
             }
         })
 

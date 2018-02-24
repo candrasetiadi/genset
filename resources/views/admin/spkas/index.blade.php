@@ -100,7 +100,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="id_invoice">Invoice</label>
                             <div class="controls">
-                                <select id="id_invoice" name="id_invoice" class="form-control" placeholder="Please Select" required>
+                                <select id="id_invoice" name="id_invoice" class="form-control" placeholder="Please Select" style="width: 100%;" required>
                                     <option value="">&nbsp;</option>
                                     @foreach($invoices as $key => $val)
                                         <option value="{{ $val->id }}">{{ $val->invoice_no }}</option>
@@ -170,6 +170,9 @@
                 $("#id_invoice").val("")
                 $("#date").val("")
                 $("#id").val("")
+
+                $("#method").val("POST")
+                $("form").attr("action", "spka")
             }
         })
     });
